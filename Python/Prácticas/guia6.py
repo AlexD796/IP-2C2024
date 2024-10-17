@@ -116,6 +116,16 @@ def sirve_pino (altura:int) -> bool:
 
 #EJERCICIO 5
 
+#devolver_el_doble_si_es_par(numero); que devuelve el doble del número en caso de ser par y el mismo número en caso contrario.
+
+def devolver_el_doble_si_es_par (numero:int) -> int:
+    if numero%2 == 0:
+        return numero *2
+    else:
+        return numero
+
+#print (devolver_el_doble_si_es_par (-3))
+
 #EJERCICIO 6 y 7
 def imprimir_del_1_al_10 ():
     inicio:int=1
