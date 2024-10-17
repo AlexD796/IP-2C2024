@@ -125,6 +125,22 @@ def devolver_el_doble_si_es_par (numero:int) -> int:
         return numero
 
 #print (devolver_el_doble_si_es_par (-3))
+def devolver_valor_si_es_par_sino_el_que_sigue (n:int) -> int:
+    if n%2 == 0:
+        return n 
+    else:
+        return n + 1
+#print (devolver_valor_si_es_par_sino_el_que_sigue (2))
+
+def devolver_valor_v2 (n:int) -> int:
+    if n%2 == 0:
+        return n 
+    if n%2 == 1:
+        return n + 1
+
+print (devolver_valor_v2 (3))
+
+
 
 #EJERCICIO 6 y 7
 def imprimir_del_1_al_10 ():
