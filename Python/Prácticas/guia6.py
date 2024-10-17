@@ -116,8 +116,6 @@ def sirve_pino (altura:int) -> bool:
 
 #EJERCICIO 5
 
-#devolver_el_doble_si_es_par(numero); que devuelve el doble del número en caso de ser par y el mismo número en caso contrario.
-
 def devolver_el_doble_si_es_par (numero:int) -> int:
     if numero%2 == 0:
         return numero *2
@@ -127,10 +125,9 @@ def devolver_el_doble_si_es_par (numero:int) -> int:
 #print (devolver_el_doble_si_es_par (-3))
 def devolver_valor_si_es_par_sino_el_que_sigue (n:int) -> int:
     if n%2 == 0:
-        return n 
+         return n 
     else:
         return n + 1
-#print (devolver_valor_si_es_par_sino_el_que_sigue (2))
 
 def devolver_valor_v2 (n:int) -> int:
     if n%2 == 0:
@@ -138,8 +135,23 @@ def devolver_valor_v2 (n:int) -> int:
     if n%2 == 1:
         return n + 1
 
-print (devolver_valor_v2 (3))
+def devolver_el_doble_si_es_multiplo3_el_triple_si_es_multiplo9(n:int) -> int:
+    if n%3==0:
+        return 2*n
+    elif n%9==0:
+        return 3*n
+    else:
+        return n 
 
+def devolver_v2(n:int) -> int:
+    if n%3==0 and  n%9!=0:
+        return 2*n
+    if (n%3==0 and n%9==0):
+        return 3*n
+    if (n%3!=0 and n%9!=0):
+        return n 
+
+#print (devolver_v2 (18))
 
 
 #EJERCICIO 6 y 7
