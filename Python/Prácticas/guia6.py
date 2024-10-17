@@ -99,6 +99,20 @@ def es_bisiesto(año:int) -> bool:
 #print (es_bisiesto (900)) #FALSE
 
 #EJERCICIO 4
+#altura en m, devuelve kg
+def peso_pino (altura_pino: int) -> int:
+    if altura_pino <= 3:
+        return altura_pino *300
+    else:
+        return 900 + (altura_pino - 3)*200
+
+def es_peso_util (peso:int) -> bool:
+    return 400 <= peso <= 1000
+
+def sirve_pino (altura:int) -> bool:
+    return es_peso_util (peso_pino (altura))
+
+#print (sirve_pino (3.5))
 
 #EJERCICIO 5
 
