@@ -153,6 +153,31 @@ def devolver_v2(n:int) -> int:
 
 #print (devolver_v2 (18))
 
+def lindo_nombre(n:str) -> None:
+    if len(n) >= 5:
+        print ("Tu nombre tiene muchas letras")
+    else:
+        print ("Tu nombre tiene menos de 5 caracteres")
+
+#lindo_nombre ("lala")
+
+def elRango(numero:int) -> None:
+        if numero <=5:
+            print ("Menor a 5")
+        elif 10<= numero <= 20:
+            print ("Entre 10 y 20")
+        elif numero >= 20:
+            print ("Mayor a 20")
+
+#elRango (16)
+
+def vacas_o_laburo (sexo:chr, edad:int):
+    if (0<=edad<= 18) or (sexo =="M" and edad>=65) or (sexo=="F" and edad>=60):
+        print ("Andá de vacaciones")
+    else:
+        print ("Te toca trabajar")
+
+#vacas_o_laburo ("A", 65)
 
 #EJERCICIO 6 y 7
 def imprimir_del_1_al_10 ():
@@ -229,4 +254,52 @@ def viaje_en_el_tiempo_aristoteles_for (partida: int, llegada:int):
 
 #EJERCICIO 8
 
+def ej_1 (x:int, y:int) -> int:
+    x = x + y
+    return x
+
+
+
+def ej_2 (x:int,y:int) -> int:
+    z = x + y
+    y = z * 2
+    return y 
+
+def ej_3 () -> None:
+    x = 5
+    y = 7
+    x = "hora"
+    y = x*2
+    return y
+
+def ej_4 ():
+    x = False
+    return not (x)
+
+def ej_5 ():
+    x = False
+    x = not (x)
+    return  not (x)
+
+def ej_6 ():
+    x = True
+    y = False
+    res= x and y 
+    x = res and x
+    return not x
+
+#print (ej_6 ())
+
 #EJERCICIO 9
+
+def rt(x: int, g: int) -> int:
+    g = g + 1
+    return x + g
+
+g: int = 0
+def ro(x: int) -> int:
+    global g
+    g = g + 1
+    return x + g
+
+ro (1)
