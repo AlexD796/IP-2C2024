@@ -159,8 +159,42 @@ def pos_minimo(s:list[int]) -> int:
 
 #print (pos_minimo ([112,23,22,1]))
 
-def palabraLarga (s:[[chr]]):
+def palabraLarga (s:list[list[chr]]) -> bool:
     for i in s:
         if len(i) > 7:
             return True
+    return False
+
+def invertir_cadena(c: str) -> str:
+    cadena_invertida = ""
+    for letra in c:
+        cadena_invertida = letra + cadena_invertida
+    return cadena_invertida
+
+def palindromo (s: str)->bool:
+    if invertir_cadena (s) == s:
+        return True
+    else:
+        return False
+
+def tresNumIguales (num:list[int])->bool:
+    i=0
+    while i < len(num)-2:
+        if num[i]==num[i+1]==num[i+2]:
+            return True
+        i+=1 ##importante esta identacion
+    return False
+
+def contarVocalesDist (s:str) -> int:
+    i=0
+    for letra in s:
+        if letra in "aeiou":
+            i+=1
+    return i
+
+contarVocalesDist ("lolaso")
+
+def tresVocalesDist (s:str)->bool:
+    if contarVocalesDist (s)== 3:
+        return True
     return False
