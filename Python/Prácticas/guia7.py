@@ -109,76 +109,36 @@ def minimo2 (s:list[int])->int:
         i+=1
     return min
 
-
-
-#POR QUE NO ME FUNCIONA ORD1 SI ES IGUAL????????????????
-def ordenados (seq:list[int])-> bool:
-    for i in range(0,len(seq),-1):
-        if (not(seq[i]<seq[i+1])):
+def ordenados2 (s:list[int])->bool:
+    for i in range(0,len(s)-1):
+        if (not(s[i]<s[i+1])):
             return False
     return True
 
-#print (ordenados ([13,64,67,13]))
-
-def ordenados2 (seq:[int])->bool:
-    for i in range(0,len(seq)-1):
-        if (not(seq[i]<seq[i+1])):
-            return False
-    return True
-
-#print (ordenados2 ([13,64,67,13]))
-
-#RANGE (LONG-1,-1,-1) RECORRER LISTA ALREVEZ
-
-def listaAlrevez (s:list[int]):
-    longitud = len(s)
-    for i in range(longitud-1, -1, -1):
-        print (s[i])
-#NO FUNCIONA POS_MAX NI POS_MIN
 def pos_maximo (s:list[int]) -> int:
-    i:int=-1
-    max:int=0
-    if len(s)== 0:
-        return -1
-
-    for n in s:
-        if n > max:
-         max=n
-         i+=1
-    return i
-
-#print (pos_maximo ([112,23,22,121212]))
+   i:int=0
+   for n in range(len(s)):
+       if maximo (s) == s[n]:
+           return n
 
 def pos_minimo(s:list[int]) -> int:
-    i:int=-1
-    min:int= maximo (s)
-    n:int=0
-    if len (s)== 0:
-        return -1
-    
-    for n in s:
-        if n < min:
-            min=n
-            n+=1
-            i+=1
-    return i
-
-#print (pos_minimo ([112,23,22,1]))
+    i:int=0
+    for n in range(len(s)):
+        if minimo (s) == s[n]:
+          return n
 
 def palabraLarga (s:list[list[chr]]) -> bool:
     for i in s:
         if len(i) > 7:
             return True
     return False
-
-def invertir_cadena(c: str) -> str:
-    cadena_invertida = ""
-    for letra in c:
-        cadena_invertida = letra + cadena_invertida
-    return cadena_invertida
-
+    
 def palindromo (s: str)->bool:
-    if invertir_cadena (s) == s:
+    cadena_invertida = ""
+    for letra in s:
+        cadena_invertida = letra + cadena_invertida
+    
+    if cadena_invertida == s:
         return True
     else:
         return False
@@ -191,36 +151,26 @@ def tresNumIguales (num:list[int])->bool:
         i+=1 ##importante esta identacion
     return False
 
-def contarVocalesDist (s:str) -> int:
-    i=0
+def contarVocalesDist (s:list[str]) -> int: #hayforma mas eficiente?
+    lista:list[str]=[]
     for letra in s:
         if letra in "aeiou":
-            i+=1
-    return i
+            lista+=letra
 
-contarVocalesDist ("lolaso")
-
+    sinRepetidos:list[str]= []
+    for n in lista:
+        if n not in sinRepetidos:
+            sinRepetidos.append (n)
+    
+    return len(sinRepetidos)
+    
 def tresVocalesDist (s:str)->bool:
     if contarVocalesDist (s)== 3:
         return True
     return False
 
-#from typing import List
+#def cant_digitos_impares (s:list) -> int:
 
-def maximo (s:list[int])->int:
-    max:int=0
-    for i in s:
-        if i > max:
-            max=i
-    return max
-
-def pos_maximo (s:list[int]) -> int:
-   i:int=0
-   for n in range(len(s)):
-       if maximo (s) == s[n]:
-           return n
-
-#def cant_digitos_impares (s:list) -> int
 
 #EJERCICIO 2
 
@@ -239,7 +189,7 @@ def Ceros3 (s:list[int]):
     for i in range (0, len(s), 2):
         s[i]= 0
 
-def CerosEnPosicionesPares2 (s:list[int]) -> list[int]: # [].append (0) = [0] > [0].append 0 [0,1]
+def CerosEnPosicionesPares2 (s:list[int]) -> list[int]: # [].append (1) = [1] > [0].append 0 [1,0]
     res:list[int] = []
     i:int= 0
 
@@ -254,17 +204,14 @@ def CerosEnPosicionesPares2 (s:list[int]) -> list[int]: # [].append (0) = [0] > 
 
 #print (CerosEnPosicionesPares ([2,3,4,2,2])) #NO FUNCIONA PORQUE NO HAY RETURN 
 
-#print (CerosEnPosicionesPares2 ([2,3,4,2,2]))
-
-#lista= [2,3,4,2,2]
+#lista= [2,3,4,2]
 #CerosEnPosicionesPares(lista)
 #print(lista)
 
 #cd a carpeta
 #python3 guia7.py 
-#pone le print en el archivo
+#ponele print en el archivo
 #control shift p > interprete python3
-#print (CerosEnPosicionesPares2 ([2,234,21,2,1]))
 
 def borrarVocales (s:str) -> str:
     res:str= []
@@ -285,9 +232,15 @@ def remplaza_vocales (s:str) -> str:
 
 
 def dar_vuelta_str (s:str) -> str:
-    lista = s
+    lista:str= s
     for i in range(len(s)-1, -1, -1):
         return (s[i])
+
+def dar_vuelta_str2 (s:str) -> str:
+    lista:str=""
+    for letra in s:
+        lista = letra + lista
+    return lista
 
 # ["a", "b", "c"] : list[str]  #en Python no existe chr como tipo sino como funcion! (asigna ascii)
 # ese ejemplo en haskell es una list[chr]
