@@ -39,7 +39,13 @@ def pertenece2 (s: list[int], e: int) -> bool:
         if s[i] == e:
             return True
     return False
-#no se me ocurrió otra forma
+
+def pertenece3 (s: list[int], e: int) -> bool:
+    res: bool= False
+    for n in s:
+        if n == e:
+            res= True
+    return res
     
 def divide_a_todos (s:list[int], e :int)->bool:
     i:int=0
@@ -198,3 +204,90 @@ def tresVocalesDist (s:str)->bool:
     if contarVocalesDist (s)== 3:
         return True
     return False
+
+#from typing import List
+
+def maximo (s:list[int])->int:
+    max:int=0
+    for i in s:
+        if i > max:
+            max=i
+    return max
+
+def pos_maximo (s:list[int]) -> int:
+   i:int=0
+   for n in range(len(s)):
+       if maximo (s) == s[n]:
+           return n
+
+#def cant_digitos_impares (s:list) -> int
+
+#EJERCICIO 2
+
+def CerosEnPosicionesPares (s:list[int]):
+    for i in (s):
+        if i % 2 == 0:
+            s[i]= 0
+
+def Ceros2 (s:list[int]):
+    i:int=0
+    while i < len (s):
+        s[i] = 0
+        i+=2
+
+def Ceros3 (s:list[int]):
+    for i in range (0, len(s), 2):
+        s[i]= 0
+
+def CerosEnPosicionesPares2 (s:list[int]) -> list[int]: # [].append (0) = [0] > [0].append 0 [0,1]
+    res:list[int] = []
+    i:int= 0
+
+    while i < len(s):
+        if i % 2 == 0:
+            res.append(0)
+        else:
+            res.append (s[i])
+        i+=1
+    return res
+
+
+#print (CerosEnPosicionesPares ([2,3,4,2,2])) #NO FUNCIONA PORQUE NO HAY RETURN 
+
+#print (CerosEnPosicionesPares2 ([2,3,4,2,2]))
+
+#lista= [2,3,4,2,2]
+#CerosEnPosicionesPares(lista)
+#print(lista)
+
+#cd a carpeta
+#python3 guia7.py 
+#pone le print en el archivo
+#control shift p > interprete python3
+#print (CerosEnPosicionesPares2 ([2,234,21,2,1]))
+
+def borrarVocales (s:str) -> str:
+    res:str= []
+    for i in s:
+        if i not in "aeiou":
+            res.append (i)
+
+    return res 
+
+def remplaza_vocales (s:str) -> str:
+    res:str = []
+    for i in s:
+        if i in "aeiou":
+            res.append ("-")
+        if i not in "aeiou":
+            res.append (i)
+    return res
+
+
+def dar_vuelta_str (s:str) -> str:
+    lista = s
+    for i in range(len(s)-1, -1, -1):
+        return (s[i])
+
+# ["a", "b", "c"] : list[str]  #en Python no existe chr como tipo sino como funcion! (asigna ascii)
+# ese ejemplo en haskell es una list[chr]
