@@ -1,3 +1,15 @@
+""" COMENTARIOS GENERALES DE LA GUIA
+
+["a", "b", "c"] : list[str]  en PYTHON --> no existe chr como tipo sino como funcion! (asigna ascii)
+este ejemplo en haskell es una list[chr]
+
+# [].append (1) = [1] --> [0].append 0 [1,0]
+
+
+OBSERVACIONES: esPalindromo, pertenece_a_cada_uno, cant_digitos_impares, CerosEnPosicionesPares
+
+"""
+
 def fibo (n:int) -> int:
     if n <= 1:
         return n 
@@ -23,6 +35,8 @@ def es_primo (n:int) -> bool:
     return cant_divisores < 2 and i == n
 
 # lo copié también y no me funciona con los primos ok... print (es_primo (11))
+
+
 
 #EJERCICIO 1
 
@@ -143,6 +157,14 @@ def palindromo (s: str)->bool:
     else:
         return False
 
+def esPalindromo(palabra:str)->bool: #nice.......................
+    l:int=len(palabra)
+    for i in range(0,l//2):
+        if(palabra[i]!=palabra[(l-1)-i]):
+            return False
+    return True
+
+
 def tresNumIguales (num:list[int])->bool:
     i=0
     while i < len(num)-2:
@@ -151,7 +173,7 @@ def tresNumIguales (num:list[int])->bool:
         i+=1 ##importante esta identacion
     return False
 
-def contarVocalesDist (s:list[str]) -> int: #hayforma mas eficiente?
+def contarVocalesDist (s:list[str]) -> int: #hay forma mas eficiente?
     lista:list[str]=[]
     for letra in s:
         if letra in "aeiou":
@@ -169,8 +191,16 @@ def tresVocalesDist (s:str)->bool:
         return True
     return False
 
-#def cant_digitos_impares (s:list) -> int:
+def cant_digitos_impares (s:list) -> int: #????
+    i:int=0
+    res:int=0
+    while i < len (s):
+        if s[i] % 2 !=0:
+            res+=1
+        i+=1
+    return res
 
+#print (cant_digitos_impares ([57, 2383, 812, 246])) #5
 
 #EJERCICIO 2
 
@@ -189,7 +219,7 @@ def Ceros3 (s:list[int]):
     for i in range (0, len(s), 2):
         s[i]= 0
 
-def CerosEnPosicionesPares2 (s:list[int]) -> list[int]: # [].append (1) = [1] > [0].append 0 [1,0]
+def CerosEnPosicionesPares2 (s:list[int]) -> list[int]: 
     res:list[int] = []
     i:int= 0
 
@@ -242,5 +272,65 @@ def dar_vuelta_str2 (s:str) -> str:
         lista = letra + lista
     return lista
 
-# ["a", "b", "c"] : list[str]  #en Python no existe chr como tipo sino como funcion! (asigna ascii)
-# ese ejemplo en haskell es una list[chr]
+def eliminar_repetidos (s:str)-> str:
+    res:int=[]
+    i:int=0
+    while i < len (s):
+        if s[i] not in res:
+            res+=s[i]
+        i+=1
+    return res
+
+#EJERCICIO 3
+
+def promedio(s:list[int]) -> float:
+    return (suma_total (s) / len (s))
+
+def hayMenorA4 (s:list[int])-> bool:
+    for i in range(len(s)):
+        if s[i] <= 4:
+            return True
+    return False
+
+def resultadoMateria (s:list[int])-> int:
+    if not hayMenorA4 (s) and promedio (s) >= 7:
+            return 1
+    if not hayMenorA4 (s) and 4 <= promedio (s) < 7:
+            return 2
+    if hayMenorA4 (s) or promedio (s) < 4:
+            return 3
+
+#EJERCICIO 4
+
+def saldoActual (historial:list[tuple[str,int]]) -> int:
+    saldo:int=0
+    for movimiento in historial:
+        if movimiento[0] == "I":
+            saldo+=movimiento[1]
+        if movimiento [0] == "R":
+            saldo-=movimiento[1]
+    return saldo 
+
+#EJERCICIO 5
+
+def pertenece_a_cada_uno_version_1 (s:list[list[int]], e:int, res:list[bool]) -> list[bool]: #CON O SIN EL RES EN LA SIGNATURA ##como hago¿'¡?¿¡¿¿¡?
+    for fila in range(len(s)):
+        lista= res.append (pertenece (s[fila],e)) + #??
+    return lista
+
+def pertenece_a_cada_uno_version_2 (s:list[list[int]], e:int, res:list[bool]) -> list[bool]:
+    res=[]
+    for fila in range(len(s)):
+        res.append (pertenece (s[fila],e))
+    return res
+
+def pertenece_a_cada_uno_version_3 (s:list[list[int]], e:int) -> list[bool]:
+    res=[]
+    for fila in range(len(s)):
+        res.append (pertenece (s[fila],e))
+    return res
+
+#print (pertenece_a_cada_uno_version_1([[2,4,6,7],[11,22,7],[7,9,6,2,35,77]], 6, [True,False,False])) #-->[True,False,True,True,False,False]
+#print (pertenece_a_cada_uno_version_2([[2,4,6,7],[11,22,7],[7,9,6,2,35,77]], 6, [True,False,False])) #-->[True,False,False]
+#print (pertenece_a_cada_uno_version_3([[2,4,6,7],[11,22,7],[7,9,6,2,35,77]], 6) #-->[True,False,False]
+
