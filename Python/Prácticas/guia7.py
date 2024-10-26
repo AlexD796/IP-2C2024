@@ -123,7 +123,7 @@ def minimo2 (s:list[int])->int:
         i+=1
     return min
 
-def ordenados2 (s:list[int])->bool:
+def ordenados (s:list[int])->bool:
     for i in range(0,len(s)-1):
         if (not(s[i]<s[i+1])):
             return False
@@ -315,7 +315,7 @@ def saldoActual (historial:list[tuple[str,int]]) -> int:
 
 def pertenece_a_cada_uno_version_1 (s:list[list[int]], e:int, res:list[bool]) -> list[bool]: #CON O SIN EL RES EN LA SIGNATURA ##como hago¿'¡?¿¡¿¿¡?
     for fila in range(len(s)):
-        lista= res.append (pertenece (s[fila],e)) + #??
+        lista= res.append (pertenece (s[fila],e)) #??
     return lista
 
 def pertenece_a_cada_uno_version_2 (s:list[list[int]], e:int, res:list[bool]) -> list[bool]:
@@ -334,3 +334,41 @@ def pertenece_a_cada_uno_version_3 (s:list[list[int]], e:int) -> list[bool]:
 #print (pertenece_a_cada_uno_version_2([[2,4,6,7],[11,22,7],[7,9,6,2,35,77]], 6, [True,False,False])) #-->[True,False,False]
 #print (pertenece_a_cada_uno_version_3([[2,4,6,7],[11,22,7],[7,9,6,2,35,77]], 6) #-->[True,False,False]
 
+def es_matriz (s:list[list[int]]):
+    i:int=0
+    while i < len(s)-1:
+        if len(s[i]) != len(s[i+1]):
+            return False
+        i+=1
+    return True
+
+def filas_ordenadas (s:list[list[int]], res:list[bool]):
+    res=[]
+    for i in range(len(s)):
+        res.append (ordenados (s[i]))
+    return res
+
+def columna (s:list[list[int]], e:int)-> list[int]:
+    res:list[int]=[]
+    for i in range (len(s)):
+        res.append (s[i][e])
+    return res
+
+def columna_ordenada (s:list[list[int]])->list[bool]: #que esta mal?
+    res:list[bool]=[]
+    for i in range (len(s)):
+        res.append(ordenados((columna (s[i], i))))
+    return res
+
+def columna_ordenada2 (s:list[list[int]])->list[bool]: #que esta mal?
+    columnas:list[bool]=[]
+    for i in range (len(s)):
+        columnas.append (s[i])
+    return columnas
+
+print (columna_ordenada2 ([[1,2,3],[4,1,3],[8,9,2]]))
+
+
+#def trasponer (s:list[list[int]])->list[list[int]]:
+   # res:list[list[int]]
+    #for i in range (i):
