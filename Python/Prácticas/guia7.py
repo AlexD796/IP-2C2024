@@ -354,21 +354,77 @@ def columna (s:list[list[int]], e:int)-> list[int]:
         res.append (s[i][e])
     return res
 
-def columna_ordenada (s:list[list[int]])->list[bool]: #que esta mal?
+def columna_ordenada (s:list[list[int]])->list[bool]:
+    columnas:list[list[int]]=[]
     res:list[bool]=[]
     for i in range (len(s)):
-        res.append(ordenados((columna (s[i], i))))
+        columnas.append((columna (s, i)))
+    for i in range (len (s)):
+        res.append(ordenados (columnas[i]))
     return res
 
-def columna_ordenada2 (s:list[list[int]])->list[bool]: #que esta mal?
-    columnas:list[bool]=[]
+def trasponer (s:list[list[int]])->list[list[int]]:
+    res:list[list[int]]=[]
     for i in range (len(s)):
-        columnas.append (s[i])
-    return columnas
+        res.append((columna (s, i)))
+    return res
 
-print (columna_ordenada2 ([[1,2,3],[4,1,3],[8,9,2]]))
+#print (trasponer (["XXO","OOX","OOO"]))
 
+def verificaPosHorizontal (s:list[str])-> bool:
+    for i in range (len (s)):
+        if s[i][0] == s[i][1] == s[i][2]:
+            return True
+    return False
 
-#def trasponer (s:list[list[int]])->list[list[int]]:
-   # res:list[list[int]]
-    #for i in range (i):
+def devuelveInt (s:list[str])->int:
+    for i in range (len (s)):
+        if s[i][0] == s[i][1] == s[i][2]:
+            if s[i][1] == "X":
+                return 1
+            if s[i][1] == "O":
+                return 0
+
+def extraerInt (s:list[str])->int:
+    if s[1][1] == "X":
+        return 1
+    else:
+        return "0"
+
+def ganadorTateti (s:list[str])->int:
+    traspuesto:list[str]=trasponer (s)
+    if verificaPosHorizontal (s) == True:
+        return devuelveInt(s)
+    if verificaPosHorizontal (traspuesto) == True:
+        return devuelveInt(traspuesto)
+    if s[0][0] == s [1][1] == s [2][2]:
+        return extraerInt (s)
+    if s[0][2] == s [1][1] == s [2][0]:
+        return extraerInt (s)
+    else:
+        return 2
+
+"""print (ganadorTateti (["XXX","OOX","XOX"])) # 1
+print (ganadorTateti (["XOX","XXX","XOX"])) # 1
+print (ganadorTateti (["XOX","OOX","OOO"])) # 0
+print (ganadorTateti (["OOX","OXO","OXX"])) # 0
+print (ganadorTateti (["OXX","XXO","OXO"])) # 1
+print (ganadorTateti (["XOX","XOX","OXX"])) # 1
+print (ganadorTateti (["XOO","OXO","XOX"])) # 1
+print (ganadorTateti (["OXO","OXX","XOO"])) # 2
+print (ganadorTateti (["OXX","XOX","OXO"])) # 0
+print (ganadorTateti (["OXX","OOX","XXO"])) # 0
+print (ganadorTateti (["XOX","OOX","OXO"])) # 2"""
+
+#EJERCICIO 7
+
+def listaDeEstudiantes()->list[str]:
+    res:list[str]=[]
+    nombre=""
+    while(nombre!="listo"):
+        print("Ingrese un nombre: ")
+        nombre=input()
+        if(nombre!='listo'):
+            res.append(nombre)
+    return res
+
