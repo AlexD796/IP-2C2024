@@ -8,7 +8,7 @@ def esta_ordenado_asc(v):
         esMenor = v[i] <= v[i + 1]
         i += 1
     return esMenor
-
+        
 def esta_ordenado_desc(v):
     longitud = len(v)
     i = 0

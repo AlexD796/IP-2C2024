@@ -406,18 +406,15 @@ def cargaSUBE () -> list[tuple[str,int]]:
     accion:str=""
     carga:int=0
     while accion != "X":
-        print ("Ingrese C = Cargar créditos\n “D” = Descontar créditos\n “X” = Finalizar el programa: ")
+        print ("Ingrese:\n “C” = Cargar créditos\n “D” = Descontar créditos\n “X” = Finalizar el programa: ")
         accion=input()
         if accion== "C":
             print ("Ingrese un monto: ")
             carga=input()
-            historial.append (accion,carga)
+            historial.append ((accion,carga))
         if accion=="D":
+            print ("Ingrese un monto: ")
             carga=input()
-            historial.append(accion,carga)
-    
+            historial.append ((accion,carga))
     return historial
-    
 
-print (cargaSUBE ())
-input ()
