@@ -167,11 +167,12 @@ def tresVocalesDist (s:str)->bool:
 def cant_digitos_impares (s:list) -> int: #????
     i:int=0
     res:int=0
-    while i < len (s):
-        if s[i] % 2 !=0:
-            res+=1
-        i+=1
-    return res
+    print (s[0])
+    #while i < len (s):
+      #  if s[i] % 2 !=0:
+      #      res+=1
+       # i+=1
+  #  return res
 
 #print (cant_digitos_impares ([57, 2383, 812, 246])) #5
 
@@ -418,3 +419,33 @@ def cargaSUBE () -> list[tuple[str,int]]:
             historial.append ((accion,carga))
     return historial
 
+def hay_minuscula (s:str) ->bool:
+    for c in s:
+        if (c>="a") and (c<="z"):
+            return True
+    return False
+
+def hay_mayuscula (s:str) ->bool:
+    for c in s:
+        if (c>="A") and (c<="Z"):
+            return True
+    return False
+
+def hay_numero (s:str) ->bool:
+    for c in s:
+        if (c>="0") and (c<="9"):
+            return True
+    return False
+
+def fortalezaContraseña ():
+    print ("Ingresá contraseña: ")
+    contraseña=input()
+    if len(contraseña) > 8 and hay_minuscula (contraseña) and hay_mayuscula (contraseña) and hay_numero (contraseña):
+        return "La seguridad de tu contraseña es: VERDE"
+    if len(contraseña) < 5:
+        return "La seguridad de tu contraseña es: ROJA"
+    else:
+        return "La seguridad de tu contraseña es: AMARILLA"
+    
+#print (fortalezaContraseña ())
+#input ()
