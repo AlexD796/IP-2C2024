@@ -11,34 +11,6 @@ OBSERVACIONES: esPalindromo, dar_vuelta_str, pertenece_a_cada_uno, cant_digitos_
 
 """
 
-def fibo (n:int) -> int:
-    if n <= 1:
-        return n 
-    un_fibo: int = 0
-    un_fibo_sig: int = 1
-    i: int= 2
-    while i <= n:
-        aux: int= un_fibo + un_fibo_sig
-        un_fibo = un_fibo_sig
-        un_fibo_sig = aux
-        i = i + 1
-    return un_fibo
-
-# NO FUNCIONA ??? (lo saqué de la clase práctica que no fui...) print (fibo (3))
-
-def es_primo (n:int) -> bool:
-    cant_divisores: int = 0
-    i: int = 1
-    while i < n and cant_divisores < 2:
-        if n % i == 0:
-            cant_divisores += 1
-            i +=1
-    return cant_divisores < 2 and i == n
-
-# lo copié también y no me funciona con los primos ok... print (es_primo (11))
-
-
-
 #EJERCICIO 1
 
 def pertenece (s: list[int], e: int) -> bool:
