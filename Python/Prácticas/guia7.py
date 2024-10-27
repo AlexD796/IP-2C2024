@@ -10,6 +10,7 @@ OBSERVACIONES: esPalindromo, dar_vuelta_str, pertenece_a_cada_uno, cant_digitos_
 !!! HACER EL OPCIONAL !!!
 
 """
+import copy
 
 #EJERCICIO 1
 
@@ -287,10 +288,12 @@ def saldoActual (historial:list[tuple[str,int]]) -> int:
 
 #EJERCICIO 5
 
-def pertenece_a_cada_uno_version_1 (s:list[list[int]], e:int, res:list[bool]) -> list[bool]: #CON O SIN EL RES EN LA SIGNATURA ##como hago¿'¡?¿¡¿¿¡?
+def pertenece_a_cada_uno_version_1 (s:list[list[int]], e:int, res:list[bool]) -> list[bool]:
+    copia:list[bool]= copy.deepcopy(res)
+    res=[]
     for fila in range(len(s)):
-        lista= res.append (pertenece (s[fila],e)) #??
-    return lista
+        res.append (pertenece (s[fila],e)) 
+    return res+copia
 
 def pertenece_a_cada_uno_version_2 (s:list[list[int]], e:int, res:list[bool]) -> list[bool]:
     res=[]
