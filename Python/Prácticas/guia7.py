@@ -6,7 +6,8 @@ este ejemplo en haskell es una list[chr]
 # [].append (1) = [1] --> [0].append 0 [1,0]
 
 
-OBSERVACIONES: esPalindromo, dar_vuelta_str, pertenece_a_cada_uno, cant_digitos_impares, CerosEnPosicionesPares
+OBSERVACIONES: esPalindromo, dar_vuelta_str, pertenece_a_cada_uno, cant_digitos_impares, CerosEnPosicionesPares, Tateti
+!!! HACER EL OPCIONAL !!!
 
 """
 
@@ -418,7 +419,7 @@ print (ganadorTateti (["XOX","OOX","OXO"])) # 2"""
 
 #EJERCICIO 7
 
-def listaDeEstudiantes()->list[str]:
+def listaDeEstudiantes()->list[str]: #okay...........
     res:list[str]=[]
     nombre=""
     while(nombre!="listo"):
@@ -428,3 +429,23 @@ def listaDeEstudiantes()->list[str]:
             res.append(nombre)
     return res
 
+def cargaSUBE () -> list[tuple[str,int]]:
+    historial: list[tuple[str,int]] = []
+    accion:str=""
+    carga:int=0
+    while accion != "X":
+        print ("Ingrese C = Cargar créditos\n “D” = Descontar créditos\n “X” = Finalizar el programa: ")
+        accion=input()
+        if accion== "C":
+            print ("Ingrese un monto: ")
+            carga=input()
+            historial.append (accion,carga)
+        if accion=="D":
+            carga=input()
+            historial.append(accion,carga)
+    
+    return historial
+    
+
+print (cargaSUBE ())
+input ()
