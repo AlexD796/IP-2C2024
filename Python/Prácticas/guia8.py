@@ -34,7 +34,7 @@ def verPila (p:Pila[int]) -> None:
 
 #print(generaṛ_nros_al_azar(5,1,100).queue) #otra forma cheater de ver en forma lista sin usar funcion verLista
 
-#EJERCICIO 2
+#   EJERCICIO 2
 
 def cantidad_elementos (p : Pila[int]) -> int:
     size:int=0
@@ -55,7 +55,7 @@ def cantidad_elementos (p : Pila[int]) -> int:
 #p.put (6)
 #print (cantidad_elementos (p))
 
-#EJERCICIO 3
+#   EJERCICIO 3
 
 def buscar_el_maximo (p:Pila[int]) -> int: #suponemos que no esta vacia, sino metemos un if para checkear
     contenedor: Pila[int] = Pila ()   
@@ -80,8 +80,57 @@ def buscar_el_maximo (p:Pila[int]) -> int: #suponemos que no esta vacia, sino me
 #pila.put(11111111111)
 #print (buscar_el_maximo (pila))
 
-#EJERCICIO 4
+#   EJERCICIO 4
 
+def buscar_nota_maxima (p : Pila[tuple[str, int]])  -> tuple[str,int]:
+    contenedor:Pila[tuple[str, int]] = Pila ()
+    tuplaNotaMax:tuple[str, int]= p.get ()
+
+    while not p.empty:
+        elem = p.get ()
+        if elem[1] > tuplaNotaMax[1]:
+            tuplaNotaMax=elem    
+        contenedor.put (elem)
+
+    while not contenedor.empty(): #variable in -> p (Pila) no puede ser modificada porque es IN
+        p.put(contenedor.get())
+
+    return tuplaNotaMax
+
+#pila=Pila()
+#pila.put(("mat", 6))
+#pila.put(("jor", 9))
+#pila.put(("kir", 6))
+#pila.put(("fer", 1))
+#pila.put(("lau", 10))
+#print (buscar_nota_maxima (pila))
+
+#   EJERCICIO 5
+def esta_bien_balanceada(s : str) -> bool:
+    parentesis:int=0
+    res:bool=True
+    contenedor:Pila[str]= Pila ()
+    for letra in s: #whatever...
+        contenedor.put(letra)
+   
+    while not contenedor.empty: #???? me pone como que esta empty
+        letra_sacada = contenedor.get ()
+        if letra_sacada == "(":
+            parentesis+=1
+        if letra_sacada == ")":
+            parentesis-=1
+        if parentesis !=0: #si lo pongo afuera no funciona porque es una variable por copia no referencia no?¿?¿
+            res= False
+    
+    return res
+
+"""print(
+esta_bien_balanceada("3*(1x2)-(5-4)"),
+esta_bien_balanceada("7((2x7)"),
+esta_bien_balanceada("8*(9/3))")
+)"""
+
+#   EJERCICIO 6
 def armar_secuencia_bingo () -> Cola[int]:
     lista: list[int] = random.shuffle ([0,...,100]) #ya desorganiza la lista dada pero no la genera CREO
     cola: Cola[int] = Cola ()
