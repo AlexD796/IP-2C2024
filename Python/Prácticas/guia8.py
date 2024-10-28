@@ -2,11 +2,13 @@ import random
 from queue import Queue as Cola
 from queue import LifoQueue as Pila
 p = Pila ()
-c = Cola
+c = Cola ()
 p . put (1) # apilar
 elemento = p . get () # desapilar
-p . empty () # vacia ?
+p . empty () # esta vacia ?
 
+
+#EJERCICIO 1
 def generaṛ_nros_al_azar (c:int, desde:int,hasta:int)->Pila[int]:
     res:Pila = Pila()
     for i in range (c):
@@ -15,47 +17,70 @@ def generaṛ_nros_al_azar (c:int, desde:int,hasta:int)->Pila[int]:
     return res
     
 
-def verPila (p:Pila) -> None:
-    contenedor:Pila= Pila()
-    numero:int #variable estacional
+def verPila (p:Pila[int]) -> None:
+    contenedor:Pila= Pila() 
     while not p.empty():
-        numero= p.get()
+        numero:int = p.get() #variable estacional
         print (numero)
-        contenedor.put(numero) #al terminar el proceso, me printea la pila alrevez
+        contenedor.put(numero) #al terminar el proceso, me printea la pila en ORDEN!
         
     while not contenedor.empty ():
         p.put(contenedor.get()) # aca la vuelve poner en la pila (igual que la original)
 
-#var = generaṛ_nros_al_azar (5,1,100)
-#verPila(var) 
+#var = generaṛ_nros_al_azar (5,1,100) #asignamos variable a la funcion
+#verPila(var) #así la podemos ver
 
-#print(var.queue) 
-#print(generaṛ_nros_al_azar(5,1,100).queue) #ver cheating xq es una lista pero esta inclinada, el primer elemento es el ultimo de la lista
+#print(var.queue) # podemos ver la "lista" de la pila inclinada (primer elementocola = ultimo de la lista)
+
+#print(generaṛ_nros_al_azar(5,1,100).queue) #otra forma cheater de ver en forma lista sin usar funcion verLista
+
+#EJERCICIO 2
+
+def cantidad_elementos (p : Pila[int]) -> int:
+    size:int=0
+    contenedor:Pila[int]= Pila ()
+    while not p.empty(): #pongo en el contenedor de a 1 lo de la pila
+        contenedor.put(p.get())
+        size+=1
+
+    while not contenedor.empty(): #pongo en la pila de a 1 lo del contenedor ¡restauré la variable in p:Pila[int]!
+        p.put(contenedor.get())
+
+    return size
+
+#p.put (55)
+#p.put (32)
+#p.put (9)
+#p.put (1)
+#p.put (6)
+#print (cantidad_elementos (p))
+
+#EJERCICIO 3
 
 def buscar_el_maximo (p:Pila[int]) -> int: #suponemos que no esta vacia, sino metemos un if para checkear
     contenedor: Pila[int] = Pila ()   
     maximo:int= p.get() #guardar el get en una variable para no perder el valor
-    contenedor.put (maximo)
     
-    while not p.empty():
-        elementoActual=p.get()
-        if maximo < elementoActual:
-            maximo = elementoActual
-        contenedor.put (elementoActual)
+    while not p.empty(): # pongo en el contenedor la pila
+        elem = p.get() #SIN ESTA VARIABLE NO FUNCIONA
+        if maximo < elem:
+            maximo = elem
+        contenedor.put (elem)
         
-    while not contenedor.empty():
+    while not contenedor.empty(): #vuelvo a establecer la pila
         p.put(contenedor.get())
         
     return maximo
 
-#print (buscar_el_maximo ([2,3,4,5])) #MAL... LA PILA NO TIENE ESA FORMA...
 #pila=Pila()
 #pila.put(2555)
 #pila.put(8)
-#pila.put(77)
+#pila.put(77444)
 #pila.put(293)
-#pila.put(0)
+#pila.put(11111111111)
 #print (buscar_el_maximo (pila))
+
+#EJERCICIO 4
 
 def armar_secuencia_bingo () -> Cola[int]:
     lista: list[int] = random.shuffle ([0,...,100]) #ya desorganiza la lista dada pero no la genera CREO
@@ -67,10 +92,10 @@ def armar_secuencia_bingo () -> Cola[int]:
        i+=1
     return cola
 
-var = armar_secuencia_bingo ()
-verPila(var) 
+#var = armar_secuencia_bingo ()
+#verPila(var) 
 
-print(var.queue) 
+#print(var.queue) 
 
 def armar_secuencia_de_bingo () -> Cola[int]:
     res: Cola[int] = Cola ()
@@ -88,7 +113,7 @@ def armar_secuencia_de_bingo () -> Cola[int]:
        
     return res
 
-print(armar_secuencia_de_bingo().queue)
+#print(armar_secuencia_de_bingo().queue)
 
 def jugar_carton_de_bingo(carton:list[int], bolillero:Cola[int])->int:
     bingo:int=0
@@ -111,7 +136,7 @@ def jugar_carton_de_bingo(carton:list[int], bolillero:Cola[int])->int:
         
     return jugadas
 
-print(jugar_carton_de_bingo)
+#print(jugar_carton_de_bingo)
 
 
 #>>> a = {} inicializo diccionario
@@ -120,4 +145,5 @@ print(jugar_carton_de_bingo)
 #>>>a devuelve [["clave1"],[1,2,3]]
     
 #def 
-    
+
+
