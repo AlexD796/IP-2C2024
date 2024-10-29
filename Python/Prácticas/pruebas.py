@@ -1,30 +1,55 @@
+import random
+from queue import Queue as Cola
 from queue import LifoQueue as Pila
+p = Pila ()
+c = Cola ()
+p . put (1) # apilar
+elemento = p . get () # desapilar
+p . empty () # esta vacia ?
 
-pila:Pila = Pila()
+def evaluar_expresion(s:str)->str:
+    contenedor=Pila()
+   
+    for token in s:
+        if token in "123456789":
+            contenedor.put(token)
+        elif token in "+-/*":
+            n2=int(contenedor.get()) #SE VUELVE INT EL STR..... SINO NO FUNCIONA
+            n1=int(contenedor.get())
+            if token=="+":
+                contenedor.put(n1+n2)
+            if token=="-":
+                contenedor.put(n1-n2)
+            if token=="*":
+                contenedor.put(n1*n2)
+            if token=="/":
+                contenedor.put(n1/n2)
+   
+    return contenedor.get()
 
-## checking whether pila is empty or not -> true
-print(pila.empty())
+#expresion = "3 4 + 5 * 2 -"
+#resultado = evaluar_expresion(expresion)
+#print(resultado) 
 
-## pushing the elements
-pila.put(1)
-pila.put(2)
-pila.put(3)
-pila.put(4)
-pila.put(5)
+def esta_bien_balanceada(s:str)->bool:
+    res:bool=True
+    p=Pila()
+    parentesis_abiertos:int=0
+    for letra in s:
+        p.put(letra)
+    while not p.empty():
+        letra_sacada=p.get()
+        if letra_sacada=="(":
+            parentesis_abiertos+=1
+        if letra_sacada==")":
+            parentesis_abiertos-=1
+   
+    if parentesis_abiertos!=0:
+        res=False
+    return res
 
-## again checking whether pila is empty or not -> false
-print(pila.empty())
-
-## popping all the elements
-print(pila.get())
-print(pila.get())
-print(pila.get())
-
-## checking the pila size
-print("Size", pila.qsize())
-
-print(pila.get())
-print(pila.get())
- 
-## checking the whether pila is empty or not for the last time -> true
-print(pila.empty())
+print(
+esta_bien_balanceada("3*(1x2)-(5-4)"),
+esta_bien_balanceada("7((2x7)"),
+esta_bien_balanceada("8*(9/3))")
+)

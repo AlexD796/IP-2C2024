@@ -110,27 +110,64 @@ def esta_bien_balanceada(s : str) -> bool:
     parentesis:int=0
     res:bool=True
     contenedor:Pila[str]= Pila ()
-    for letra in s: #whatever...
+  
+    for letra in s: 
         contenedor.put(letra)
    
-    while not contenedor.empty: #???? me pone como que esta empty
+    while not contenedor.empty(): 
         letra_sacada = contenedor.get ()
         if letra_sacada == "(":
             parentesis+=1
         if letra_sacada == ")":
             parentesis-=1
-        if parentesis !=0: #si lo pongo afuera no funciona porque es una variable por copia no referencia no?¿?¿
-            res= False
+    
+    if parentesis !=0: #si lo pongo afuera no funciona porque es una variable por copia no referencia no?¿?¿
+        res= False
     
     return res
 
 """print(
 esta_bien_balanceada("3*(1x2)-(5-4)"),
 esta_bien_balanceada("7((2x7)"),
-esta_bien_balanceada("8*(9/3))")
+esta_bien_balanceada("8*(9/3))"),
+esta_bien_balanceada("8*(9/3)()") #no se como hacer para que esto de false
 )"""
 
 #   EJERCICIO 6
+
+def pertenece (s: list[int], e: int) -> bool:
+    for i in range (len(s)):
+        if s[i] == e:
+            return True
+    return False
+
+def evaluar_expresion(s:str)->str:
+    contenedor=Pila()
+   
+    for token in s:
+        if pertenece ("123456789", token):
+            contenedor.put(token)
+        if pertenece ("+-/*", token):
+            n2=int(contenedor.get()) #SE VUELVE INT EL STR..... SINO NO FUNCIONA
+            n1=int(contenedor.get()) #SE VUELVE INT EL STR..... SINO NO FUNCIONA
+         
+            if token=="+":
+                contenedor.put(n1+n2)
+            if token=="-":
+                contenedor.put(n1-n2)
+            if token=="*":
+                contenedor.put(n1*n2)
+            if token=="/":
+                contenedor.put(n1/n2)
+   
+    return contenedor.get()
+
+#expresion = "3 4 + 5 * 2 -"
+#resultado = evaluar_expresion(expresion)
+#print(resultado) # Debería devolver 33
+
+#   EJERCICIO 6
+
 def armar_secuencia_bingo () -> Cola[int]:
     lista: list[int] = random.shuffle ([0,...,100]) #ya desorganiza la lista dada pero no la genera CREO
     cola: Cola[int] = Cola ()
