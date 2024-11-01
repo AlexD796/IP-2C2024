@@ -1,3 +1,21 @@
+""" COMENTARIOS GENERALES DE LA GUIA
+
+>>>a = {} --> inicializo diccionario
+>>>a["clave1"] = "valor1"
+a["clave1"] = [1,2,3]
+>>>a devuelve [["clave1"],[1,2,3]]
+
+n2=int(contenedor.get()) --> SE VUELVE INT EL STR..... SINO NO FUNCIONA
+
+random.randint (desde,hasta) --> genera un numero random
+random.shuffle(bolillero) --> desordenar lista
+
+.queue --> hacemos un tad pila o cola y generamos una lista (INCLINADA)
+
+OBSERVACIONES: Mostrar PILAS Y COLAS, evaluar_expresion!!!!, hacer el bingo!!, esta_bien_balanceada?? cualquiera
+!!! HACER EL OPCIONAL !!!
+
+"""
 import random
 from queue import Queue as Cola
 from queue import LifoQueue as Pila
@@ -379,15 +397,20 @@ def atencion_a_clientes (clientes: Cola[tuple[str, int, bool, bool]]) -> Cola[tu
     prioridad1:Cola=Cola()
     prioridad2:Cola=Cola()
     noPrioridad:Cola=Cola()
+    contenedor:Pila=Pila()
 
     while not clientes.empty():
         persona: tuple[str, int, bool, bool]= clientes.get()
+        contenedor.put(persona)
         if persona[3] == True:
             prioridad1.put(persona)
         if persona[3] == False and persona[2] == True:
             prioridad2.put(persona)
         if persona[3] == False and persona[2] == False:
             noPrioridad.put(persona)
+
+    while not contenedor.empty():
+        clientes.put(contenedor.get())
 
     while not prioridad1.empty():
         res.put(prioridad1.get())
@@ -412,11 +435,27 @@ gente.put(("h",49,True,False))
 
 mostrar_cola(atencion_a_clientes(gente)) """
 
-#>>> a = {} inicializo diccionario
-#>>>a["clave1"] = "valor1"
-#a["clave"] = [1,2,3]
-#>>>a devuelve [["clave1"],[1,2,3]]
+#   EJERCICIO 16
     
-#def 
+#   EJERCICIO 17
+def calcular_promedio_por_estudiante(notas: list[tuple[str, float]]) -> dict[str, float]:
+    res: dict[str, float] = {}
+    for nota in notas:
+        prom: float = calcular_promedio(nota[0], notas)
+        res[nota[0]] = prom
+        
+    return res
+
+def calcular_promedio(estudiante: str, notas: list[tuple[str, float]]) -> float:
+    cant_notas: int = 0
+    suma_notas: int = 0
+    for nota in notas:
+        if nota[0] == estudiante:
+            cant_notas += 1
+            suma_notas += nota[1]
+
+    return suma_notas/cant_notas
 
 
+#notas = [["P1", 3], ["P2", 5],["P1", 6], ["P3", 10],["P3", 10], ["P1", 6]]
+#print(calcular_promedio_por_estudiante(notas))
