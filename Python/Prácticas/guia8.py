@@ -444,7 +444,7 @@ def agrupar_por_longitud (nombre_archivo : str) -> dict:
         palabras:list[str] = separarPalabras(linea)
 
         for palabra in palabras:
-            clave:int= len(palabra)-1 #cuenta el salto de linea jjj len("hola") es 5
+            clave:int= len(palabra) #cuenta el salto de linea jjj len("hola") es 5
             if clave in diccionario: #este IN es legal!! no es el mismo que pertenece #por default pregunta por las claves!! no el valor_actual
                 diccionario[clave] +=1 
             else:
