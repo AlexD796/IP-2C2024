@@ -3,12 +3,16 @@
 ["a", "b", "c"] : list[str]  en PYTHON --> no existe chr como tipo sino como funcion! (asigna ascii)
 este ejemplo en haskell es una list[chr]
 
-# [].append (1) = [1] --> [0].append 0 [1,0]
+# [].append (1) = [1] --> [0].append --> [1,0]
 
 
 OBSERVACIONES: esPalindromo, dar_vuelta_str, pertenece_a_cada_uno, cant_digitos_impares, CerosEnPosicionesPares, Tateti
 !!! HACER EL OPCIONAL !!!
 
+cd a carpeta
+python3 guia7.py 
+ponele print en el archivo
+control shift p > interprete python3
 """
 import copy
 
@@ -213,10 +217,6 @@ def CerosEnPosicionesPares2 (s:list[int]) -> list[int]:
 #CerosEnPosicionesPares(lista)
 #print(lista)
 
-#cd a carpeta
-#python3 guia7.py 
-#ponele print en el archivo
-#control shift p > interprete python3
 
 def borrarVocales (s:str) -> str:
     res:str= []

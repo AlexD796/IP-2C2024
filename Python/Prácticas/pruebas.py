@@ -7,64 +7,47 @@ p . put (1) # apilar
 elemento = p . get () # desapilar
 p . empty () # esta vacia ?
 
+def mostrar(capitales):  
+    #for p,c in capitales.items():  # recorre diccionario
+      #  print(p,":",c)
 
-def mostrar_pila(p: Pila[int]) -> None: 
-    paux: Pila[int] = Pila()
+    #for e in capitales.items(): # otra forma más incomoda
+        #print("Pais:" + e[0] + " Capital:" + e[1])
 
-    while not p.empty():
-        elem: int = p.get()
-        paux.put(elem)
-        print(elem)
-    print("-----")
+    for k in capitales.keys(): 
+      print(k + ": " + capitales[k])  # recorre las claves
+      #print(capitales[k])
 
-    while not paux.empty():
-        p.put(paux.get())
+    if 'Portugal' in capitales:  # comprueba si existe clave
+        print('\nCapital Portugal:', capitales['Portugal'])
 
-def mostrar_cola(c: Cola[int]) -> None: 
-    caux: Cola[int] = Cola()
-
-    while not c.empty():
-        elem: int = c.get()
-        caux.put(elem)
-        print(elem, end=" ")
-    print("-----")
-
-
-def atencion_a_clientes (clientes: Cola[tuple[str, int, bool, bool]]) -> Cola[tuple[str, int, bool, bool]]:
-    res:Cola=Cola()
-    prioridad1:Cola=Cola()
-    prioridad2:Cola=Cola()
-    noPrioridad:Cola=Cola()
-
-    while not clientes.empty():
-        persona: tuple[str, int, bool, bool]= clientes.get()
-        if persona[3] == True:
-            prioridad1.put(persona)
-        if persona[3] == False and persona[2] == True:
-            prioridad2.put(persona)
-        if persona[3] == False and persona[2] == False:
-            noPrioridad.put(persona)
-
-    while not prioridad1.empty():
-        res.put(prioridad1.get())
-
-    while not prioridad2.empty():
-        res.put(prioridad2.get())
-
-    while not noPrioridad.empty():
-        res.put(noPrioridad.get())
+    #print('\nHay {0} países\n'.format(len(capitales)))  # 'Hay 2 países'
     
-    return res
+    for pais, capital in capitales.items():  # recorre diccionario
+            print('Capital de {1}:{0} '.format(capital, pais)) 
 
-gente = Cola()
-gente.put(("a",48,True,False))
-gente.put(("b",45,False,True))
-gente.put(("c",34,True,True))
-gente.put(("d",84,False,False))
-gente.put(("e",44,False,True))
-gente.put(("f",41,True,True))
-gente.put(("g",14,False,False))
-gente.put(("h",49,True,False))
+    print('\nHay {0} países\n'.format(len(capitales))) #very useful
 
-mostrar_cola(atencion_a_clientes(gente)) 
+capitales:dict[str,str] = {'Chile':'Santiago', 'España':'Madrid', 'Francia':'París'}
+#mostrar(capitales)
 
+infoPaisFrancia = {'Capital':'París',
+                'Campeonatos de Mundo':2}
+
+infoPaisArgentina = {'Capital':'Buenos Aires',
+                'Campeonatos de Mundo':3}
+
+infoPaisChile = {'Capital':'Santiago',
+                'Campeonatos de Mundo':0}
+
+infoPaises = {'Chile': infoPaisChile ,
+              'Argentina': infoPaisArgentina,
+              'Francia':infoPaisFrancia}
+
+#def aVer ():
+for pais, info in infoPaises.items():
+        print("Información de " + pais + ": ")
+        for clave, valor in info.items():
+            print(" - " + clave + ": " + str(valor)) 
+
+print(infoPaises['Chile']['Capital'])
