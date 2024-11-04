@@ -459,3 +459,81 @@ def calcular_promedio(estudiante: str, notas: list[tuple[str, float]]) -> float:
 
 #notas = [["P1", 3], ["P2", 5],["P1", 6], ["P3", 10],["P3", 10], ["P1", 6]]
 #print(calcular_promedio_por_estudiante(notas))
+
+#EJERCICIO 21
+def contar_lineas (nombre_archivo:str) -> int:
+    contar:int = 0
+    archivo = open (nombre_archivo, 'r') #r de read
+
+    for linea in archivo.readlines(): #me devuelve como lista las lineas de ese archivo -> list[str]
+        contar+=1
+    archivo.close() #importante
+
+    return contar
+
+#print (contar_lineas('practica.txt'))
+
+#EJERCICIO 22 diferente
+
+def clonar_sin_comentarios (nombre_archivo_entrada:str, nombre_archivo_salida:str): 
+    archivo_entrada = open (nombre_archivo_entrada, 'r') #si es read no modifica el archivo
+    archivo_salida = open (nombre_archivo_salida, 'w')
+
+    for linea in archivo_entrada.readlines():
+        if linea.strip()[0] != '#': #strip saca los primeros espacios
+            archivo_salida.write(linea)
+
+    archivo_entrada.close()
+    archivo_salida.close()
+
+#clonar_sin_comentarios ("practica2.txt", "chau.txt")
+
+#EJERCICIO 16 
+
+def agrupar_por_longitud (nombre_archivo : str) -> dict:
+    archivo = open (nombre_archivo, 'r')
+    diccionario:dict[int,int]= dict() #{} crea un dict vacio tambien
+
+    for linea in archivo.readlines(): 
+        palabras:list[str] = linea.split()
+
+        for palabra in palabras:
+            clave:int= len(linea)-1
+            if clave in diccionario: #este IN es legal!! no es el mismo que pertenece #por default pregunta por las claves!! no el valor_actual
+                diccionario[clave] +=1 #cuenta el salto de linea jjj len("hola") es 5
+            else:
+                diccionario[clave] = 1
+
+    archivo.close()  
+    return diccionario
+
+#print(agrupar_por_longitud ("practica.txt"))
+
+#EJERCICIO 18
+
+def la_palabra_mas_frecuente (nombre_archivo:str)-> str:
+    archivo = open (nombre_archivo, 'r')
+    diccionario:dict[str,int]= {}  #palabra especifica, frecuencia
+
+    for linea in archivo.readlines():
+        palabras:list[str] = linea.split() #implementar .split
+
+        for palabra in palabras:
+             clave:int = palabra
+        if clave in diccionario: #este IN es legal!! no es el mismo que pertenece #por default pregunta por las claves!! no el valor
+            diccionario[clave] +=1 #cuenta el salto de linea jjj len("hola") es 5
+        else:
+            diccionario[clave] = 1
+
+    max_palabra:str= ''
+    max_apariciones:int=0 #asumimos que es un archivo de al menos 1 palabra, 0 no es nunca el maximo
+    for clave in diccionario: #recorre el diccionario clave por clave (no la clave y valor)
+        valor_actual:int= diccionario[clave]
+        if valor_actual > max_apariciones:
+            max_palabra= clave
+            max_apariciones = valor_actual
+    archivo.close()
+
+    return max_palabra and max_apariciones
+
+#print (la_palabra_mas_frecuente ("practica.txt"))
