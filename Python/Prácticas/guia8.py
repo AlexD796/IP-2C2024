@@ -453,14 +453,14 @@ def agrupar_por_longitud (nombre_archivo : str) -> dict:
     archivo.close()  
     return diccionario
 
-def separarPalabras(linea:str) -> list[str]: #"hola como va" -> [hola, como, va]
+def separarPalabras(linea:str) -> list[str]: #" hola como va" -> [hola, como, va]
     res:list=[]
     palabra:str=""
 
     for caracter in linea: 
         if caracter != " ":
             palabra += caracter
-        if caracter == " ":
+        if caracter == " " and len(palabra) > 0: # para que no cuente primeros espacios de palabras
             res.append (palabra) 
             palabra=""
     
@@ -468,23 +468,24 @@ def separarPalabras(linea:str) -> list[str]: #"hola como va" -> [hola, como, va]
 
     return res
 
-#dale = "hola como va"
+#dale = " hola como va"
 #print (separarPalabras (dale))
 
-print(agrupar_por_longitud ("loremIpsum.txt"))
+#print(agrupar_por_longitud ("loremIpsum.txt"))
         
 #   EJERCICIO 17
 def calcular_promedio_por_estudiante(notas: list[tuple[str, float]]) -> dict[str, float]:
     res: dict[str, float] = {}
     for nota in notas:
         prom: float = calcular_promedio(nota[0], notas)
-        res[nota[0]] = prom
+        res[nota[0]] = prom #agrego al diccionario nombreEstudiante : promedio de sus notas
         
     return res
 
 def calcular_promedio(estudiante: str, notas: list[tuple[str, float]]) -> float:
     cant_notas: int = 0
     suma_notas: int = 0
+   
     for nota in notas:
         if nota[0] == estudiante:
             cant_notas += 1
@@ -499,10 +500,10 @@ def calcular_promedio(estudiante: str, notas: list[tuple[str, float]]) -> float:
 #EJERCICIO 18
 def la_palabra_mas_frecuente (nombre_archivo:str)-> str:
     archivo = open (nombre_archivo, 'r')
-    diccionario:dict[str,int]= {}  #palabra especifica, frecuencia
+    diccionario:dict[str,int]= {}  #diccionario es (palabra especifica, frecuencia)
 
     for linea in archivo.readlines():
-        palabras:list[str] = linea.split() #implementar .split
+        palabras:list[str] = linea.split() #hace "buenas tardes" -> [buenas, tardes]
 
         for palabra in palabras:
              clave:int = palabra
@@ -523,6 +524,52 @@ def la_palabra_mas_frecuente (nombre_archivo:str)-> str:
     return max_palabra and max_apariciones
 
 #print (la_palabra_mas_frecuente ("practica.txt"))
+
+#EJERCICIO 19
+"""historialAlex:Pila[str] = Pila ()
+historialAlex.put("a")
+historialAlex.put("b")
+historialAlex.put("c")
+historialAlex.put("d")
+historialAlex.put("e")
+
+historialSanti = Pila ()
+historialSanti.put("x")
+historialSanti.put("y")
+historialSanti.put("z")
+historialSanti.put("w")
+historialSanti.put("k")
+
+historialLauti = Pila ()
+historialLauti.put("1")
+historialLauti.put("2")
+historialLauti.put("3")
+historialLauti.put("4")
+historialLauti.put("5")
+
+historiales: dict[str, Pila[str]] = {'alex': historialAlex,'santi': historialSanti,'lauti':historialLauti}
+"""
+
+def visitar_sitio(historiales:dict[str, Pila[str]],usuario:str,sitio:str): #historial, "lauti", "6"
+    for nombre, sitios in historiales.items():
+        if nombre == usuario:
+            sitios.put(sitio)
+        
+
+#visitar_sitio (historiales, "lauti", "6")
+
+def navegar_atras (historiales: dict[str, Pila[str]], usuario:str):
+    for nombre, sitios in historiales.items():
+        if nombre == usuario:
+            ultimo_sitio = sitios.get()
+            sitio_atras = sitios.get()
+            sitios.put(ultimo_sitio) #cambian posiciones como si fuera le historial real, fijate en el celu jj
+            sitios.put(sitio_atras)
+
+#navegar_atras (historiales, "lauti") 
+#mostrar_pila (historialLauti)
+
+#EJERCICIO 20
 
 #EJERCICIO 21
 def contar_lineas (nombre_archivo:str) -> int:
@@ -552,3 +599,8 @@ def clonar_sin_comentarios (nombre_archivo_entrada:str, nombre_archivo_salida:st
 
 #clonar_sin_comentarios ("practica2.txt", "chau.txt")
 
+#EJERCICIO 23
+#EJERCICIO 24
+#EJERCICIO 25
+#EJERCICIO 26
+#EJERCICIO 27
