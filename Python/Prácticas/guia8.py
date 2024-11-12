@@ -521,7 +521,7 @@ def la_palabra_mas_frecuente (nombre_archivo:str)-> str:
             max_apariciones = valor_actual
     archivo.close()
 
-    return max_palabra and max_apariciones
+    return max_palabra #and max_apariciones
 
 #print (la_palabra_mas_frecuente ("practica.txt"))
 
@@ -570,6 +570,26 @@ def navegar_atras (historiales: dict[str, Pila[str]], usuario:str):
 #mostrar_pila (historialLauti)
 
 #EJERCICIO 20
+stock:dict[str, dict[str, float, int]]={} #no me sale
+
+def agregar_producto (inventario:dict[str, dict[str, float | int]], nombre:str, precio:float, cantidad:int):
+    inventario [nombre] = {"precio":precio, "cantidad":cantidad}
+
+def actualizar_stock(inventario:dict[str, dict[str, float | int]], nombre:str, cantidad:int):
+    for p,c in inventario [nombre].items():
+        if nombre == p:
+            c+= cantidad
+            inventario [nombre].pop(c)
+            inventario [nombre] ["cantidad"] = c
+
+
+
+agregar_producto (stock, "manzanas", 92.4, 6)
+agregar_producto (stock, "latas", 3.94, 88)
+agregar_producto (stock, "tapers", 3456.2, 10)
+agregar_producto (stock, "hojas", 15.0, 150)
+actualizar_stock (stock, "hojas", 8)
+print (stock)
 
 #EJERCICIO 21
 def contar_lineas (nombre_archivo:str) -> int:
@@ -600,6 +620,29 @@ def clonar_sin_comentarios (nombre_archivo_entrada:str, nombre_archivo_salida:st
 #clonar_sin_comentarios ("practica2.txt", "chau.txt")
 
 #EJERCICIO 23
+def invertir_lineas(nombre_archivo : str): #?????? no entiendo que esta mal
+    archivo_entrada =  open (nombre_archivo, "r")
+
+    lineas = archivo_entrada.readlines()
+
+    lineas_alrevez = invertir_lineas(lineas)
+    
+    for linea in lineas_alrevez:
+        reverso.write (linea)
+    
+    reverso.close()
+    archivo_entrada.close()
+
+def invertir_lineas (listaLineas: list[str]) -> list[str]:
+    res:str=[]
+    for i in range (len(listaLineas)-1, -1, -1):
+        res.append (listaLineas[i])
+    return res
+
+
+reverso = open("reverso.txt","w") #DEBE IR AFUERA SINO NO FUNCIONA
+invertir_lineas("himno.txt")
+
 #EJERCICIO 24
 #EJERCICIO 25
 #EJERCICIO 26

@@ -237,9 +237,10 @@ def remplaza_vocales (s:str) -> str:
 
 
 def dar_vuelta_str (s:str) -> str:
-    lista:str= s
+    lista:str= ""
     for i in range(len(s)-1, -1, -1):
-        return (s[i])
+        lista.apend (s[i])
+    return lista
 
 def dar_vuelta_str2 (s:str) -> str:
     lista:str=""
