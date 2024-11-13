@@ -550,7 +550,7 @@ historialLauti.put("5")
 historiales: dict[str, Pila[str]] = {'alex': historialAlex,'santi': historialSanti,'lauti':historialLauti}
 """
 
-def visitar_sitio(historiales:dict[str, Pila[str]],usuario:str,sitio:str): #historial, "lauti", "6"
+def visitar_sitio(historiales:dict ],usuario:str,sitio:str): #historial, "lauti", "6"
     for nombre, sitios in historiales.items():
         if nombre == usuario:
             sitios.put(sitio)
