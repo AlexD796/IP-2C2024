@@ -44,6 +44,8 @@ def mostrar_cola(c: Cola[int]) -> None:
         print(elem, end=" ") #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     print("-----")
 
+
+
 #EJERCICIO 1
 def generaṛ_nros_al_azar (c:int, desde:int,hasta:int)->Pila[int]:
     res:Pila = Pila()
@@ -259,7 +261,7 @@ def cantidad_elementos_cola (p : Cola) -> int:
         contenedor.put(p.get())
         size+=1
 
-    while not contenedor.empty(): #pongo en la pila de a 1 lo del contenedor ¡restauré la variable in p:Pila[int]!
+    while not contenedor.empty(): #pongo en la pila de a 1 lo del contenedor ¡restauré la variable in p:Cola[int]!
         p.put(contenedor.get())
 
     return size
