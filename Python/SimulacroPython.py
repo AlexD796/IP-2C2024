@@ -28,30 +28,6 @@ def gestion_notas(notas_estudiante_materia: list[tuple[str, str, int]]) -> dict[
 alumnosNotas={("a", "mate", 5),("a", "bio", 6),("b", "cine", 9), ("c", "cunt", 7),("c", "kuka", 10)}
 #print (gestion_notas (alumnosNotas))
 
-ver= [("a", "b")]
-ver.append (("c", "d"))
-#print (ver)
-
-dicc= {"a": (13, "a")}
-dicc.pop ("a")
-dicc["b"] = ("b", "c")
-dicc.pop ("b")
-dicc["c"] = [("12",11)]
-#dicc.append (("sss", 8)) #no
-listaTupla = dicc.pop ("c") #[("12",11)]
-listaTupla.append (("dje", 33))
-dicc ["c"] = listaTupla
-#print (dicc)
-#print (listaTupla)
-
-
-
-veamos = [5434, 42, 811, 3139]
-veamos.append (5)
-#print (veamos)
-veamos.pop ()
-#print (veamos) #listas son pilas First In First Out
-
 #EJERCICIO 2
 #[5434, 42, 811, 3139] --> 5 (los dígitos pares son 4, 4, 4, 2, y 8).
 def cantidad_digitos_pares(numeros: list[int]) -> int:
@@ -77,14 +53,17 @@ def reordenar_cola_primero_pesados (paquetes:Cola[tuple[str,int]], umbral:int) -
     res:Cola[tuple[str,int]] = Cola ()
     cola_umbral_menor:Cola[tuple[str,int]] = Cola ()
     cola_umbral_mayor:Cola[tuple[str,int]] = Cola ()
+    paquetes_copia:list[tuple[str,int]] = []
 
     while not paquetes.empty():
         tupla:tuple[str,int] = paquetes.get()
-
-        if tupla[1] <= umbral:
-            cola_umbral_menor.put (tupla)
-        if tupla[1] > umbral:
-            cola_umbral_mayor.put (tupla)
+        paquetes_copia.append(tupla)
+        
+    for elem in paquetes_copia: #paquetes_copia no se vacía
+        if elem[1] <= umbral:
+            cola_umbral_menor.put (elem)
+        if elem[1] > umbral:
+            cola_umbral_mayor.put (elem)
 
     while not cola_umbral_mayor.empty():
         res.put(cola_umbral_mayor.get())
@@ -92,7 +71,10 @@ def reordenar_cola_primero_pesados (paquetes:Cola[tuple[str,int]], umbral:int) -
     while not cola_umbral_menor.empty():
         res.put(cola_umbral_menor.get())
 
-    return res #no restauré el parametro in de paquetes
+    for x in paquetes_copia: #restauré variable original ya que me está recorriendo la copia de paquetes (que está en el orden de la cola original (izq principio, derecha final))
+        paquetes.put(x)
+
+    return res 
 
 def mostrar_cola(c: Cola[int]) -> None: 
     caux: Cola[int] = Cola()

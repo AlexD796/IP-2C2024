@@ -13,7 +13,7 @@ random.shuffle(bolillero) --> desordenar lista
 .queue --> hacemos un tad pila o cola y generamos una lista (INCLINADA)
 
 OBSERVACIONES: Mostrar PILAS Y COLAS, evaluar_expresion!!!!, hacer el bingo!!, esta_bien_balanceada?? cualquiera
-!!! HACER EL OPCIONAL !!!
+!!! HACER EL OPCIONAL !!! agregar_producto, invertir_lineas
 
 """
 import random
@@ -552,7 +552,7 @@ historialLauti.put("5")
 historiales: dict[str, Pila[str]] = {'alex': historialAlex,'santi': historialSanti,'lauti':historialLauti}
 """
 
-def visitar_sitio(historiales:dict ],usuario:str,sitio:str): #historial, "lauti", "6"
+def visitar_sitio(historiales:dict,usuario:str,sitio:str): #historial, "lauti", "6"
     for nombre, sitios in historiales.items():
         if nombre == usuario:
             sitios.put(sitio)
@@ -591,7 +591,7 @@ agregar_producto (stock, "latas", 3.94, 88)
 agregar_producto (stock, "tapers", 3456.2, 10)
 agregar_producto (stock, "hojas", 15.0, 150)
 actualizar_stock (stock, "hojas", 8)
-print (stock)
+#print (stock)
 
 #EJERCICIO 21
 def contar_lineas (nombre_archivo:str) -> int:
@@ -646,6 +646,15 @@ reverso = open("reverso.txt","w") #DEBE IR AFUERA SINO NO FUNCIONA
 invertir_lineas("himno.txt")
 
 #EJERCICIO 24
+
+def agregar_frase_al_final (nombre_archivo: str, frase: str):
+    archivo = open (nombre_archivo, 'w')
+
+    
+
+
+
+
 #EJERCICIO 25
 #EJERCICIO 26
 #EJERCICIO 27
