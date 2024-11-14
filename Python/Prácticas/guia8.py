@@ -619,7 +619,7 @@ def clonar_sin_comentarios (nombre_archivo_entrada:str, nombre_archivo_salida:st
     archivo_entrada.close()
     archivo_salida.close()
 
-#clonar_sin_comentarios ("practica2.txt", "chau.txt")
+clonar_sin_comentarios ("himno.txt", "chau.txt")
 
 #EJERCICIO 23
 def invertir_lineas(nombre_archivo : str): #?????? no entiendo que esta mal
@@ -642,15 +642,26 @@ def invertir_lineas (listaLineas: list[str]) -> list[str]:
     return res
 
 
-reverso = open("reverso.txt","w") #DEBE IR AFUERA SINO NO FUNCIONA
-invertir_lineas("himno.txt")
+reverso = open("chau.txt","w") #DEBE IR AFUERA SINO NO FUNCIONA
+#invertir_lineas("himno.txt")
 
 #EJERCICIO 24
 
 def agregar_frase_al_final (nombre_archivo: str, frase: str):
-    archivo = open (nombre_archivo, 'w')
+    archivo_w = open (nombre_archivo, 'w')
+    archivo_r = open (nombre_archivo, 'r')
 
-    
+    lineasArchivo:list[str] = archivo_r.readlines()
+
+    lineasArchivo.append (frase)
+
+    for linea in lineasArchivo:
+        archivo_w.writeline (linea)
+
+    archivo_w.close()
+    archivo_w.close()
+
+agregar_frase_al_final ("himno.txt", "fin")
 
 
 
