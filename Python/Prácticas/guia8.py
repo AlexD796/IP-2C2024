@@ -13,7 +13,7 @@ random.shuffle(bolillero) --> desordenar lista
 .queue --> hacemos un tad pila o cola y generamos una lista (INCLINADA)
 
 OBSERVACIONES: Mostrar PILAS Y COLAS, evaluar_expresion!!!!, hacer el bingo!!, esta_bien_balanceada?? cualquiera
-!!! HACER EL OPCIONAL !!! agregar_producto, invertir_lineas
+agregar_producto, invertir_lineas, ej 20 !! diccionario
 
 """
 import random
@@ -552,13 +552,13 @@ historialLauti.put("5")
 historiales: dict[str, Pila[str]] = {'alex': historialAlex,'santi': historialSanti,'lauti':historialLauti}
 """
 
-def visitar_sitio(historiales:dict,usuario:str,sitio:str): #historial, "lauti", "6"
+def visitar_sitio(historiales:dict,usuario:str,sitio:str): #historial, "x", "6"
     for nombre, sitios in historiales.items():
         if nombre == usuario:
             sitios.put(sitio)
         
 
-#visitar_sitio (historiales, "lauti", "6")
+#visitar_sitio (historiales, "x", "6")
 
 def navegar_atras (historiales: dict[str, Pila[str]], usuario:str):
     for nombre, sitios in historiales.items():
@@ -568,30 +568,66 @@ def navegar_atras (historiales: dict[str, Pila[str]], usuario:str):
             sitios.put(ultimo_sitio) #cambian posiciones como si fuera le historial real, fijate en el celu jj
             sitios.put(sitio_atras)
 
-#navegar_atras (historiales, "lauti") 
+#navegar_atras (historiales, "x") 
 #mostrar_pila (historialLauti)
 
 #EJERCICIO 20
-stock:dict[str, dict[str, float, int]]={} #no me sale
 
+#d= {"manzanas" : {(precio: 23.1), (cantidad: 3)}, "hojas" : {(precio: 82.7), (cantidad: 10)}}
 def agregar_producto (inventario:dict[str, dict[str, float | int]], nombre:str, precio:float, cantidad:int):
     inventario [nombre] = {"precio":precio, "cantidad":cantidad}
 
 def actualizar_stock(inventario:dict[str, dict[str, float | int]], nombre:str, cantidad:int):
-    for p,c in inventario [nombre].items():
-        if nombre == p:
-            c+= cantidad
-            inventario [nombre].pop(c)
-            inventario [nombre] ["cantidad"] = c
+    diccPyC = inventario.pop (nombre)
 
+    cant = diccPyC.pop ("cantidad")
 
+    cant += cantidad
 
-agregar_producto (stock, "manzanas", 92.4, 6)
-agregar_producto (stock, "latas", 3.94, 88)
-agregar_producto (stock, "tapers", 3456.2, 10)
-agregar_producto (stock, "hojas", 15.0, 150)
-actualizar_stock (stock, "hojas", 8)
-#print (stock)
+    diccPyC["cantidad"] = cant
+
+    inventario[nombre] = diccPyC
+
+def actualizar_precios (inventario:dict[str, dict[str, float | int]], nombre:str, precio:float):
+    diccPyC = inventario.pop(nombre)
+
+    p = diccPyC.pop("precio")
+
+    p = precio
+
+    diccPyC["precio"] = p
+
+    inventario[nombre] = diccPyC
+
+def calcular_valor_inventario(inventario:dict[str, dict[str, float | int]]) -> float:
+    res:float= 0.0
+    aux:list[float] = []
+    valorActual:float= 0.0
+
+    for claves in inventario.values():
+        for n in claves.values():
+            if valorActual == 0.0:
+                valorActual = n
+            else:
+                valorActual *= n
+
+        aux.append(valorActual)
+        valorActual = 0.0
+
+    for n in aux:
+        res += n
+
+    return res
+
+"""
+stock:dict[str, dict[str, float, int]]={} 
+agregar_producto (stock, "manzanas", 20.0, 60)
+agregar_producto (stock, "latas", 30.0, 30)
+#agregar_producto (stock, "tapers", 5.0, 10)
+
+total = calcular_valor_inventario (stock)
+print (total)
+"""
 
 #EJERCICIO 21
 def contar_lineas (nombre_archivo:str) -> int:
@@ -619,7 +655,7 @@ def clonar_sin_comentarios (nombre_archivo_entrada:str, nombre_archivo_salida:st
     archivo_entrada.close()
     archivo_salida.close()
 
-clonar_sin_comentarios ("himno.txt", "chau.txt")
+#clonar_sin_comentarios ("himno.txt", "chau.txt")
 
 #EJERCICIO 23
 def invertir_lineas(nombre_archivo : str): #?????? no entiendo que esta mal
@@ -642,7 +678,7 @@ def invertir_lineas (listaLineas: list[str]) -> list[str]:
     return res
 
 
-reverso = open("chau.txt","w") #DEBE IR AFUERA SINO NO FUNCIONA
+#reverso = open("chau.txt","w") #DEBE IR AFUERA SINO NO FUNCIONA
 #invertir_lineas("himno.txt")
 
 #EJERCICIO 24
@@ -661,7 +697,7 @@ def agregar_frase_al_final (nombre_archivo: str, frase: str):
     archivo_w.close()
     archivo_w.close()
 
-agregar_frase_al_final ("himno.txt", "fin")
+#agregar_frase_al_final ("himno.txt", "fin")
 
 
 

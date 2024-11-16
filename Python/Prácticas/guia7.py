@@ -6,8 +6,7 @@ este ejemplo en haskell es una list[chr]
 # [].append (1) = [1] --> [0].append --> [1,0]
 
 
-OBSERVACIONES: esPalindromo, dar_vuelta_str, pertenece_a_cada_uno, cant_digitos_impares, CerosEnPosicionesPares, Tateti
-!!! HACER EL OPCIONAL !!!
+OBSERVACIONES: esPalindromo, dar_vuelta_str, pertenece_a_cada_uno, cant_digitos_impares, CerosEnPosicionesPares, ej 1.13!!
 
 cd a carpeta
 python3 guia7.py 
@@ -216,7 +215,7 @@ def recortar_lista_hasta (s:list[int], contador:int) -> list[int]:
 
 #print (recortar_lista_hasta ([1,2,3,0], 2))
 
-print (index_secuencia_mas_larga ([1,2,3,4,1,2,3,4,5,6,7,5]))
+#print (index_secuencia_mas_larga ([1,2,3,4,1,2,3,4,5,6,7,5]))
 
 #EJERCICIO 2
 
