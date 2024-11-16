@@ -146,10 +146,15 @@ menorDivisorDesde desde n
     | mod n desde == 0 = desde
     | otherwise = menorDivisorDesde (desde + 1)
 
-??? sonCoprimos :: Integer ->Integer ->Bool
+sonCoprimos :: Integer ->Integer ->Bool 
+sonCoprimos 1 _ = True
+sonCoprimos _ 1 = True
+sonCoprimos x y 
+    | (x == y) || (mod x y == 0) || (mod y x == 0) = False
+    | menorDivisor x == menorDivisor y = False 
+    | menorDivisor x /= menorDivisor y = True 
 
-
-??? nEsimoPrimo::Integer->Integer
+nEsimoPrimo::Integer->Integer
 nEsimoPrimo 1 = 2
 nEsimoPrimo n = siguientePrimo (nEsimoPrimo (n-1))
 -- Devuelve el primo nº n, 
@@ -163,15 +168,28 @@ siguientePrimo n | esPrimo (n+1) = n+1
 
 -----------------EJ 17------------------------
 
+esFibonacci :: Integer -> Bool
+esFibonacci n = esFibonacciDesde 1 n
+
+esFibonacciDesde :: Integer -> Integer -> Bool
+esFibonacciDesde desde n 
+    | fib (desde) == n = True
+    | fib (desde) > n = False
+    | otherwise = esFibonacciDesde (desde+1) n
 
 -----------------EJ 18------------------------
 
 
 -----------------EJ 19------------------------
-esSumaInicialDePrimos :: Int -> Bool
-esSumaInicialDePrimos
+--10? -> True xq [2+3+5]
+--11? -> False xq [2+3+5]= 10 y [2+3+5+7]=17
+sumaInicialDePrimos :: Integer -> Bool 
+sumaInicialDePrimos n = sumaInicialDePrimosDesde 1 n
 
------------------EJ 16------------------------
-esSumaInicialDePrimosDesde Int -> Int -> Bool
-esSumaInicialDePrimosDesde desde n 
-    |sumaPrimos
+sumaInicialDePrimosDesde :: Integer -> Integer -> Bool
+sumaInicialDePrimosDesde i n 
+    | n == 0 = True
+    | n < 0 = False
+    | otherwise = sumaInicialDePrimosDesde (n - nEsimoPrimo i) (i+1)
+--nunca en mi vida se me hubiera ocurrido esto: le va restado el nEsimo 
+--primo desde nEsimo1= 2 a la supuesta suma los primos, y si llega a 0 es que es y si se pasa es que no

@@ -181,6 +181,43 @@ def cant_digitos_impares (s:list) -> int: #????
 
 #print (cant_digitos_impares ([57, 2383, 812, 246])) #5
 
+#[1,2,3,4,0,15,16,17,18,19,20,6] -> 5
+#[1,2,3,4] -> 0
+#[9,10,11,1,2,3] -> 0
+#[1,8,9,10,11,1,5,6,7] -> 1
+
+def index_secuencia_mas_larga (s:list[int]) -> int:
+    aux:list[int] = []
+    index:int = 0
+    contador:int=0
+
+    for i in range(len(s)-1):
+        if s[i] < s[i+1]:
+            contador+=1
+        
+        else: #contador=2 #elem 11
+            secuenciaActual = recortar_lista_hasta (s, contador)
+            #indexActual = len(secuenciaActual) 
+
+            if len(secuenciaActual) > len (aux):
+                aux = secuenciaActual
+                index = len (s) - len (secuenciaActual) -2
+
+    return index
+            #for i in range (contador+1, len(s), 1):
+
+def recortar_lista_hasta (s:list[int], contador:int) -> list[int]:
+    res:list[int]=[]
+
+    for i in range (contador):
+        res.append (s[i])
+
+    return res
+
+#print (recortar_lista_hasta ([1,2,3,0], 2))
+
+print (index_secuencia_mas_larga ([1,2,3,4,1,2,3,4,5,6,7,5]))
+
 #EJERCICIO 2
 
 def CerosEnPosicionesPares (s:list[int]):

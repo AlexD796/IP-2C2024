@@ -112,3 +112,129 @@ bisiesto x
     | (mod x 100 == 0) && (mod x 400 /= 0) = False
     | otherwise = True 
 
+            --------GUIA 3-------
+
+fib :: Integer -> Integer
+fib 0 = 0
+fib 1 = 1
+fib n = fib (n-1) + fib (n-2) 
+
+parteEntera :: Float -> Integer
+parteEntera 0 = 0
+parteEntera n | n >= 0 && n < 1 = 0
+parteEntera n = 1 + parteEntera (n-1)
+
+esDivisible :: Integer -> Integer -> Bool
+esDivisible a b = mod b a == 0
+
+--sumaImpares 3 ; 1+3+5 ⇝ 9
+sumaImpares :: Integer -> Integer
+sumaImpares 1 = 1
+sumaImpares n = sumaImpares (n-1) + (2*n-1)
+
+factorial :: Integer -> Integer
+factorial 0 = 1
+factorial n = factorial (n-1) * n
+
+medioFact :: Int -> Int
+medioFact 0 = 1
+medioFact 1 = 1
+medioFact n = n * medioFact (n-2)
+
+todosDigitosIguales :: Integer -> Bool
+todosDigitosIguales n 
+    | n < 10 = True
+    | otherwise = mod n 10 == mod (div n 10) 10 && todosDigitosIguales (div n 10)
+
+--olvidate que me aprenda algo de todo esto
+cantidadDigitos :: Int -> Int
+cantidadDigitos n 
+    | n < 10 = 1
+    | otherwise = 1 + cantidadDigitos (div n 10)
+
+iesimoDigito :: Int -> Int -> Int
+iesimoDigito n 1 =  div n (10 ^ ((cantidadDigitos n)-1))
+iesimoDigito n i = iesimoDigito ( mod n (10 ^ ((cantidadDigitos n)-1))) (i-1)
+
+capicua :: Int -> Bool
+capicua n 
+    | n < 10 = True
+    | otherwise = (ultimo n == primero n) && capicua (sacarBordes n)
+        where ultimo n = iesimoDigito n (cantidadDigitos n)
+              primero n = iesimoDigito n 1
+              sacarBordes n = div (mod n (10 ^ (cantidadDigitos n - 1))) 10
+
+--1231 = 1 +2 3+ 1
+sumaDigitos :: Integer ->Integer
+sumaDigitos n 
+    | n < 10 = n
+    | otherwise = mod n 10 + sumaDigitos (div n 10)
+
+eAprox :: Integer ->Float
+eAprox 0 = 1
+eAprox n = eAprox (n-1) + (1 / fromIntegral (factorial n))
+
+raizDe2Aprox :: Integer -> Float
+raizDe2Aprox 1 = 1
+raizDe2Aprox n = aux (n)- 1
+
+aux :: Integer -> Float
+aux 1 = 2
+aux n = 2 + (1 / aux (n-1))
+
+menorDivisor :: Integer ->Integer
+menorDivisor 1 = 1
+menorDivisor n = menorDivisorDesde 2 n
+
+menorDivisorDesde :: Integer -> Integer -> Integer
+menorDivisorDesde e n
+    | mod n e == 0 = e
+    | mod n e /= 0 = menorDivisorDesde (e+1) n
+
+esPrimo :: Integer ->Bool
+esPrimo 1 = False
+esPrimo n = menorDivisor n == n
+
+sonCoprimos :: Integer ->Integer ->Bool 
+sonCoprimos 1 _ = True
+sonCoprimos _ 1 = True
+sonCoprimos x y 
+    | x == y = False
+    | (mod x y == 00 ) || (mod y x == 00 )= False
+    | menorDivisor x == menorDivisor y = False 
+    | menorDivisor x /= menorDivisor y = True 
+
+-- pn es el minimo numero natural MAYOR A pn-1 que sea primo
+nEsimoPrimo :: Integer ->Integer
+nEsimoPrimo 1 = 2
+nEsimoPrimo n = minimoPrimoDesde (nEsimoPrimo (n-1) + 1)
+
+minimoPrimoDesde :: Integer -> Integer
+minimoPrimoDesde n 
+    | esPrimo (n) = n
+    | otherwise = minimoPrimoDesde (n+1)
+
+--10? -> True xq [2+3+5]
+--11? -> False xq [2+3+5]= 10 y [2+3+5+7]=17
+esSumaInicialDePrimosDesde :: Integer -> Integer -> Bool
+esSumaInicialDePrimosDesde n i
+    | n < 0 = False
+    | n == 0 = True
+    | otherwise = esSumaInicialDePrimosDesde (n - nEsimoPrimo i) (i+1)
+
+esSumaInicialDePrimos :: Integer -> Bool
+esSumaInicialDePrimos n = esSumaInicialDePrimosDesde n 1
+
+--nunca en mi vida se me hubiera ocurrido esto: le va restado el nEsimo 
+--primo desde nEsimo1= 2 a la supuesta suma los primos, y si llega a 0 es que es y si se pasa es que no
+
+esFibonacci :: Integer -> Bool
+esFibonacci n = esFibonacciDesde 1 n
+
+esFibonacciDesde :: Integer -> Integer -> Bool
+esFibonacciDesde desde n 
+    | fib (desde) == n = True
+    | fib (desde) > n = False
+    | otherwise = esFibonacciDesde (desde+1) n
+
+--EJERCICIO 18 Y 20
