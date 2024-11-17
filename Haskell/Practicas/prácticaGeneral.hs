@@ -112,7 +112,7 @@ bisiesto x
     | (mod x 100 == 0) && (mod x 400 /= 0) = False
     | otherwise = True 
 
-            --------GUIA 3-------
+            --------GUIA 4-------
 
 fib :: Integer -> Integer
 fib 0 = 0
@@ -147,22 +147,25 @@ todosDigitosIguales n
     | otherwise = mod n 10 == mod (div n 10) 10 && todosDigitosIguales (div n 10)
 
 --olvidate que me aprenda algo de todo esto
-cantidadDigitos :: Int -> Int
-cantidadDigitos n 
-    | n < 10 = 1
-    | otherwise = 1 + cantidadDigitos (div n 10)
+cantDigitos::Integer->Integer
+cantDigitos n | n<10 =1
+              | otherwise = 1+cantDigitos (sacarUltimo n)
+             
+              where sacarUltimo n = div n 10
 
-iesimoDigito :: Int -> Int -> Int
-iesimoDigito n 1 =  div n (10 ^ ((cantidadDigitos n)-1))
-iesimoDigito n i = iesimoDigito ( mod n (10 ^ ((cantidadDigitos n)-1))) (i-1)
-
-capicua :: Int -> Bool
+iesimoDigito::Integer->Integer->Integer
+iesimoDigito n i | i == cantDigitos n = ultimoDigito n
+                 | otherwise = iesimoDigito (sacarUltimo n) i
+                
+                 where sacarUltimo n = div n 10
+                       ultimoDigito n = mod n 10
+capicua :: Integer -> Bool
 capicua n 
     | n < 10 = True
     | otherwise = (ultimo n == primero n) && capicua (sacarBordes n)
-        where ultimo n = iesimoDigito n (cantidadDigitos n)
+        where ultimo n = iesimoDigito n (cantDigitos n)
               primero n = iesimoDigito n 1
-              sacarBordes n = div (mod n (10 ^ (cantidadDigitos n - 1))) 10
+              sacarBordes n = div (mod n (10 ^ (cantDigitos n - 1))) 10
 
 --1231 = 1 +2 3+ 1
 sumaDigitos :: Integer ->Integer
@@ -237,4 +240,82 @@ esFibonacciDesde desde n
     | fib (desde) > n = False
     | otherwise = esFibonacciDesde (desde+1) n
 
---EJERCICIO 18 Y 20
+--NO ENTENDÍ AMBOS
+mayorDigitoPar :: Integer -> Integer
+mayorDigitoPar n 
+    | (n < 10) && (mod n 2 == 0) = n
+    | (n < 10) && (mod n 2 /= 0) = -1
+    | even ultimoDigito = max ultimoDigito (mayorDigitoPar nRecortado)
+    | otherwise = mayorDigitoPar nRecortado
+        where ultimoDigito = mod n 10
+              nRecortado = div n 10
+
+               --------GUIA 5-------
+
+longitud :: [t] -> Integer
+longitud (x:[]) = 1
+longitud (x:xs) = 1 + longitud xs
+
+ultimo :: [t] -> t
+ultimo (x:[]) = x
+ultimo (x:xs) = ultimo xs
+
+principio :: [t] -> [t]
+principio (x:[]) = [x]
+principio (x:xs) = x : principio xs
+
+reverso :: [t] -> [t]
+reverso (x:[]) = [x]
+reverso (x:xs) = reverso xs ++ [x]
+
+pertenece :: (Eq t) => t -> [t] -> Bool
+pertenece e (x:[]) = e == x -- _ [] = False
+pertenece e (x:xs) = e == x || pertenece e xs 
+
+todosIguales :: (Eq t) => [t] -> Bool
+todosIguales (x:[]) = True
+todosIguales (x:xs) = x == head xs && todosIguales xs
+
+todosDistintos :: (Eq t) => [t] -> Bool
+todosDistintos (x:[]) = True
+todosDistintos (x:xs)
+    | pertenece x xs = False
+    | otherwise = todosDistintos (xs)
+
+hayRepetidos :: (Eq t) => [t] -> Bool
+hayRepetidos (x:[]) = False
+hayRepetidos (x:xs)
+    | pertenece x xs = True
+    | otherwise = hayRepetidos xs
+
+quitarElem :: (Eq t) => t -> [t] -> [t]
+quitarElem e [] = []
+quitarElem e (x:xs) 
+    | e == x = xs
+    | otherwise = x : quitar e (xs)
+
+quitarTodos :: (Eq t ) => t -> [t] -> [t]
+quitarTodos e [] = []
+quitarTodos e (x:xs)
+    | e == x = quitarTodos e xs
+    | otherwise = x : quitarTodos e xs
+
+eliminarRepetidos :: (Eq t) => [t] -> [t]
+eliminarRepetidos [x] = [x]
+eliminarRepetidos (x:xs)
+    | pertenece x xs = eliminarRepetidos ((quitarTodos x xs)++[x])
+    | otherwise = x : eliminarRepetidos xs
+
+mismosElementos :: (Eq t) => [t] -> [t] -> Bool
+mismosElementos [] [] = True
+mismosElementos l1 l2 = estaContenida l1 l2 && estaContenida l2 l1
+  
+--se fija si l1 esta contenida en l2 
+estaContenida :: (Eq t) => [t] -> [t] -> Bool
+estaContenida [] (y:ys) = True
+estaContenida (x:xs) [] = False
+estaContenida (x:xs) (y:ys) = pertenece x (y:ys) && estaContenida xs (y:ys)
+
+capicuaBis :: (Eq t) => [t] -> Bool
+capicuaBis n = reverso n == n
+

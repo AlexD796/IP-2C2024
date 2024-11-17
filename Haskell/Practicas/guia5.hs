@@ -53,11 +53,10 @@ quitarTodos e (x:xs)
     | otherwise = x : quitarTodos e (xs)
 
 eliminarRepetidos :: (Eq t) => [t] -> [t]
-eliminarRepetidos [] = []
 eliminarRepetidos [x] = [x]
 eliminarRepetidos (x:xs)
-    | x == head xs = eliminarRepetidos xs
-    |otherwise = x : eliminarRepetidos xs
+    | pertenece x xs = eliminarRepetidos ((quitarTodos x xs)++[x])
+    | otherwise = x : eliminarRepetidos xs
 
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool
 mismosElementos [] [] = True
