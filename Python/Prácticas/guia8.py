@@ -659,11 +659,11 @@ def invertir_lineas(nombre_archivo : str): #?????? no entiendo que esta mal
 
     lineas_alrevez = invertir_lineas(lineas)
     
-    for linea in lineas_alrevez:
-        reverso.write (linea)
+   # for linea in lineas_alrevez:
+   #     reverso.write (linea)
     
-    reverso.close()
-    archivo_entrada.close()
+   # reverso.close()
+   # archivo_entrada.close()
 
 def invertir_lineas (listaLineas: list[str]) -> list[str]:
     res:str=[]
