@@ -217,28 +217,22 @@ def intercalar(p1:Pila, p2:Pila)-> Pila:
         res.put(contenedor2.get())
 
     return res
-"""
+
 pila1=Pila()
 pila2=Pila()
 
 pila1.put(1)
 pila1.put(2)
 pila1.put(3)
-pila1.put(4)
-pila1.put(5)
-pila1.put(6)
 
 pila2.put(7)
 pila2.put(8)
 pila2.put(9)
-pila2.put(10)
-pila2.put(11)
-pila2.put(12)
 
 resultado = intercalar (pila1,pila2)
 
-verPila(resultado)
-"""
+mostrar_pila(resultado)
+
 #   EJERCICIO 8
 def generar_nros_al_azar2(cantidad: int, desde: int,hasta: int) -> Cola:
     res:Cola=Cola()
@@ -307,7 +301,7 @@ def intercalar2(c1:Cola, c2:Cola)->Cola:
         contenedor.put(c2.get())
 
     return contenedor
-"""
+
 cola1=Cola()
 cola2=Cola()
 
@@ -322,8 +316,8 @@ cola2.put(6)
 
 lista = intercalar2 (cola1,cola2)
 
-mostrar_cola(lista)
-"""
+#mostrar_cola(lista)
+
 
 #   EJERCICIO 13
 def armar_secuencia_de_bingo () -> Cola[int]:

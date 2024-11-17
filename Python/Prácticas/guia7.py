@@ -3,7 +3,9 @@
 ["a", "b", "c"] : list[str]  en PYTHON --> no existe chr como tipo sino como funcion! (asigna ascii)
 este ejemplo en haskell es una list[chr]
 
-# [].append (1) = [1] --> [0].append --> [1,0]
+list=[]
+list.append (1) --> [1]
+list.append (0) --> [1,0]
 
 
 OBSERVACIONES: esPalindromo, dar_vuelta_str, pertenece_a_cada_uno, cant_digitos_impares, CerosEnPosicionesPares, ej 1.13!!
@@ -168,22 +170,28 @@ def tresVocalesDist (s:str)->bool:
         return True
     return False
 
-def cant_digitos_impares (s:list) -> int: #????
-    i:int=0
-    res:int=0
-    print (s[0])
-    #while i < len (s):
-      #  if s[i] % 2 !=0:
-      #      res+=1
-       # i+=1
-  #  return res
+def cant_digitos_impares (lista:list[int]) -> int:
+    aux_str:list[int] = []
+    contador:int=0
+    for numero in lista:
+        numero_str = str (numero)
+
+        for digito in numero_str:
+            aux_str.append(digito)
+
+    for d in aux_str:
+        if int(d) % 2 != 0:
+            contador+=1
+
+    return contador
 
 #print (cant_digitos_impares ([57, 2383, 812, 246])) #5
+
 
 #[1,2,3,4,0,15,16,17,18,19,20,6] -> 5
 #[1,2,3,4] -> 0
 #[9,10,11,1,2,3] -> 0
-#[1,8,9,10,11,1,5,6,7] -> 1
+#[8,9,10,11,1,5,6,7] -> 1
 
 def index_secuencia_mas_larga (s:list[int]) -> int:
     aux:list[int] = []
@@ -195,23 +203,36 @@ def index_secuencia_mas_larga (s:list[int]) -> int:
             contador+=1
         
         else: #contador=2 #elem 11
-            secuenciaActual = recortar_lista_hasta (s, contador)
+            contador+=1
+            secuenciaActual = recortar_lista_hasta (s,contador)
+            aux.append(secuenciaActual)
+
+            for i in range (contador-1):
+                s.pop(s[i])
+
+    return aux
+
+
+    #secuenciaFinal = recortar_lista_hasta (s, len(s)-len(secuenciaActual), contador)
+    #aux.append (secuenciaFinal)
+
             #indexActual = len(secuenciaActual) 
 
-            if len(secuenciaActual) > len (aux):
-                aux = secuenciaActual
-                index = len (s) - len (secuenciaActual) -2
+            #if len(secuenciaActual) > len (aux):
+            #    aux = secuenciaActual
+            #    index = len (s) - len (secuenciaActual) -2
 
-    return index
-            #for i in range (contador+1, len(s), 1):
+            #for i in range (contador+1, len(s), 1): NO ME SALE
 
-def recortar_lista_hasta (s:list[int], contador:int) -> list[int]:
+def recortar_lista_hasta (s:list[int], hasta:int) -> list[int]:
     res:list[int]=[]
 
-    for i in range (contador):
+    for i in range (hasta):
         res.append (s[i])
 
     return res
+
+#print (index_secuencia_mas_larga ([9,10,11,1,2,3]))
 
 #print (recortar_lista_hasta ([1,2,3,0], 2))
 

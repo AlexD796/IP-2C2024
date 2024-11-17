@@ -96,7 +96,7 @@ c.put(("c", 7))
 c.put(("b", 5))
 c.put(("a", 12)) #final
 
-print (mostrar_cola (reordenar_cola_primero_pesados(c, 5)))
+#print (mostrar_cola (reordenar_cola_primero_pesados(c, 5)))
 
 # ("c", 7) principio
 # ("a", 12)
