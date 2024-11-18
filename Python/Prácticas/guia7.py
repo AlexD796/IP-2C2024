@@ -188,41 +188,29 @@ def cant_digitos_impares (lista:list[int]) -> int:
 #print (cant_digitos_impares ([57, 2383, 812, 246])) #5
 
 
-#[1,2,3,4,0,15,16,17,18,19,20,6] -> 5
+#[1,2,3,4,0,15,16,17,18,19,20,6] -> 4
 #[1,2,3,4] -> 0
 #[9,10,11,1,2,3] -> 0
-#[8,9,10,11,1,5,6,7] -> 1
-
+#[8,9,10,11,1,5,6,7] -> 1 
 def index_secuencia_mas_larga (s:list[int]) -> int:
-    aux:list[int] = []
-    index:int = 0
-    contador:int=0
+    len_seq:int = 0
+    len_mas_larga:int = 0
+    index:int=0
 
     for i in range(len(s)-1):
         if s[i] < s[i+1]:
-            contador+=1
+            len_seq += 1
         
-        else: #contador=2 #elem 11
-            contador+=1
-            secuenciaActual = recortar_lista_hasta (s,contador)
-            aux.append(secuenciaActual)
+        else: #len_seq=2 #i=2 -> elem 10
+            len_seq = 0
 
-            for i in range (contador-1):
-                s.pop(s[i])
+        if len_mas_larga < len_seq:
+            len_mas_larga = len_seq
+            index = i+1 - len_mas_larga #+1 porque el i empieza desde 0 y nosotros estamos restando el donde estamos menos la longitud de la secuencia para ver donde empieza la secuencia
 
-    return aux
+    return index
 
-
-    #secuenciaFinal = recortar_lista_hasta (s, len(s)-len(secuenciaActual), contador)
-    #aux.append (secuenciaFinal)
-
-            #indexActual = len(secuenciaActual) 
-
-            #if len(secuenciaActual) > len (aux):
-            #    aux = secuenciaActual
-            #    index = len (s) - len (secuenciaActual) -2
-
-            #for i in range (contador+1, len(s), 1): NO ME SALE
+print (index_secuencia_mas_larga([1,2,3,0,16,17,18,19,20,6])) #-> 5
 
 def recortar_lista_hasta (s:list[int], hasta:int) -> list[int]:
     res:list[int]=[]
