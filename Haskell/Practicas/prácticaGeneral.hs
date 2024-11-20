@@ -416,3 +416,17 @@ sacarPrimeraP (x:xs)
     | x /= ' ' = sacarPrimeraP xs
     | otherwise = xs
 --}
+
+sumaAcumulada :: (Num t) => [t] -> [t]
+sumaAcumulada [] = []
+sumaAcumulada [s] = [s]
+sumaAcumulada (s) = sumaAcumulada (todoMenosUltimo (s)) ++ [sumaTotal (s)]
+
+sumaTotal :: (Num t) => [t] -> t
+sumaTotal (x:[]) = x
+sumaTotal (x:xs) = x + sumaTotal xs
+
+todoMenosUltimo :: (Num t) => [t] -> [t]
+todoMenosUltimo [] = []
+todoMenosUltimo (x:[]) = []
+todoMenosUltimo (x:xs) = x : todoMenosUltimo xs
