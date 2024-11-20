@@ -430,3 +430,78 @@ todoMenosUltimo :: (Num t) => [t] -> [t]
 todoMenosUltimo [] = []
 todoMenosUltimo (x:[]) = []
 todoMenosUltimo (x:xs) = x : todoMenosUltimo xs
+
+descomponerEnPrimos :: [Integer] -> [[Integer]]
+descomponerEnPrimos [] = []
+descomponerEnPrimos (x:xs) = [descomponerEnPrimosDesde 2 x] ++ descomponerEnPrimos xs
+
+descomponerEnPrimosDesde :: Integer -> Integer -> [Integer]
+descomponerEnPrimosDesde e 1 = []
+descomponerEnPrimosDesde e n 
+    | mod n e == 0 = e : descomponerEnPrimosDesde e (div n e)
+    | otherwise = descomponerEnPrimosDesde (e+1) n
+
+type Texto = [Char]
+type Nombre = Texto
+type Telefono = Texto
+type Contacto = (Nombre, Telefono)
+type ContactosTel = [Contacto]
+
+--[char] -> [([char], [char])]
+--"alex" [("jime", "123"),("kao", 921),("lola", 82)] -> false
+enLosContactos :: Nombre ->ContactosTel ->Bool
+enLosContactos nombre [] = False
+enLosContactos nombre ((nombreContacto,tel): contactos) 
+    | nombre == nombreContacto = True
+    | otherwise = enLosContactos nombre (contactos)
+
+--("jime", "123") [("alex", "123"),("kao", 921),("lola", 82)] -> [("alex", "123"),("kao", 921),("lola", 82), ("jime", "123")]
+--("jime", "123") [("alex", "123")] -> [("alex", "123"),("jime", "123")]
+
+agregarContacto :: Contacto ->ContactosTel ->ContactosTel
+agregarContacto (nombre,telefono) [] = [(nombre,telefono)]
+agregarContacto (nombre,telefono) ((n, tel):contactos)
+    | nombre == n = (nombre,telefono) :  (contactos)
+    | otherwise = (n,tel) : agregarContacto (nombre,telefono) contactos
+
+--"santi" [("alex", "123")] -> [("alex", "123")]
+--"jime" [("alex", "123"), ("jime", "123")] -> [("alex", "123")] -
+eliminarContacto :: Nombre ->ContactosTel ->ContactosTel
+eliminarContacto n [] = []
+eliminarContacto n ((n2, tel2):contactos)
+    | n == n2 = contactos
+    | otherwise = (n2, tel2) : eliminarContacto n contactos
+
+type Identificacion = Integer
+type Ubicacion = Texto
+type Estado = (Disponibilidad, Ubicacion)
+type Locker = (Identificacion, Estado)
+type MapaDeLockers = [Locker]
+type Disponibilidad = Bool
+
+-- 101 [(105,(True,"QOTSA")), (110,(False,"99292"))] -> False
+existeElLocker :: Identificacion ->MapaDeLockers ->Bool
+existeElLocker id [] = False
+existeElLocker id ((idEsp,(disp,ubi)):lockers)
+    | id == idEsp = True
+    | otherwise = existeElLocker id lockers
+
+-- 101 [(105,(True,"QOTSA")), (101,(False,"99292"))] -> "99292"
+ubicacionDelLocker :: Identificacion ->MapaDeLockers ->Ubicacion
+ubicacionDelLocker id [] = "" --no deberia llegar aca porque el locker tiene q existir en mapaDeLockers
+ubicacionDelLocker id ((idEsp,(disp,ubi)):lockers)
+    | id == idEsp = ubi
+    | otherwise = ubicacionDelLocker id lockers
+
+--true es libre
+estaDisponibleElLocker :: Identificacion ->MapaDeLockers ->Bool
+estaDisponibleElLocker id ((idEsp,(disp,ubi)):lockers)
+    | id == idEsp = disp 
+    | otherwise = estaDisponibleElLocker id lockers
+
+-- 105 [(105,(True,"QOTSA")), (101,(False,"99292"))] -> [(105,(False,"QOTSA")), (101,(False,"99292"))]
+ocuparLocker :: Identificacion ->MapaDeLockers ->MapaDeLockers
+ocuparLocker id ((idEsp,(disp,ubi)):lockers)
+    | id == idEsp && disp==True = ((idEsp,(False,ubi)):lockers)
+    | id == idEsp && disp==False = ((idEsp,(disp,ubi)):lockers)
+    | otherwise = (idEsp,(disp,ubi)) : ocuparLocker id lockers
