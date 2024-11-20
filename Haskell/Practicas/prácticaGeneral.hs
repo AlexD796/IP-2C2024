@@ -353,22 +353,66 @@ ordenarBis (s) = ordenar (quitarElem (maximo (s)) (s)) ++ [maximo (s)]
 
 
 sacarBlancosRepetidos :: [Char] -> [Char]
+sacarBlancosRepetidos [] = []
+sacarBlancosRepetidos [x] = [x]
+sacarBlancosRepetidos (x:xs) 
+    | x == head xs && x == ' ' = sacarBlancosRepetidos (xs)
+    | otherwise = x : sacarBlancosRepetidos (xs)
+
+contarPalabras :: [Char] -> Integer
+contarPalabras s = contarPalabrasAux (sacarBlancosRepetidos (s))
+
+contarPalabrasAux :: [Char] -> Integer
+contarPalabrasAux [] = 1
+contarPalabrasAux (x:xs)
+    | x == ' ' = 1 + contarPalabrasAux xs
+    | otherwise = contarPalabrasAux xs
+
+
+{--
+sacarBlancosRepetidos :: [Char] -> [Char]
+sacarBlancosRepetidos [] = []
+sacarBlancosRepetidos [x] 
+    | x == ' ' = []
+    | otherwise = [x]
 sacarBlancosRepetidos s = sacarEspaciosDelante (sacarEspaciosDetras (sacarBlancoss (s)))
 
 sacarEspaciosDelante :: [Char] -> [Char]
+sacarEspaciosAdelante [] = []
+sacarEspaciosAdelante [x] = [x]
 sacarEspaciosDelante (x:xs) 
     | x == ' ' = sacarEspaciosDelante (xs)
     | otherwise = x : xs
 
 sacarEspaciosDetras :: [Char] -> [Char]
+sacarEspaciosDetras [] = []
+sacarEspaciosDetras [x] = [x]
 sacarEspaciosDetras (x:xs) 
     | ultimo xs == ' ' = sacarEspaciosDetras (x:principio xs)
     | otherwise = (x:xs)
 
 sacarBlancoss :: [Char] -> [Char]
+sacarBlancoss [] = []
 sacarBlancoss (x:[]) 
     | x == ' ' = []
     | otherwise = [x]
 sacarBlancoss (x:xs) 
     | x == head xs && x == ' ' = sacarBlancoss (xs)
     | otherwise = x : sacarBlancoss (xs)
+
+palabras :: [Char] -> [[Char]]
+palabra [] = []
+palabras s = sacarBlancosRepetidos(primeraP (s)) : palabras (sacarPrimeraP (sacarBlancosRepetidos (s)))
+
+primeraP :: [Char] -> [Char]
+primeraP [] = []
+primeraP (x:xs)
+    | x /= ' ' = x : primeraP xs
+    | otherwise = []
+
+sacarPrimeraP :: [Char] -> [Char]
+sacarPrimeraP [] = []
+sacarPrimeraP (x:xs) 
+    | x /= ' ' = sacarPrimeraP xs
+    | otherwise = xs
+--}
