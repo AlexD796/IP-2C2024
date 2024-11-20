@@ -319,3 +319,56 @@ estaContenida (x:xs) (y:ys) = pertenece x (y:ys) && estaContenida xs (y:ys)
 capicuaBis :: (Eq t) => [t] -> Bool
 capicuaBis n = reverso n == n
 
+maximoBis :: [Integer] -> Integer
+maximoBis (x:[]) = x
+maximoBis (x:xs) 
+    | x >= head xs = maximoBis (x:tail xs)
+    | otherwise = maximoBis (xs)
+
+sumarN :: Integer -> [Integer] -> [Integer]
+sumarN 0 (x:xs) = (x:xs)
+sumarN e [] = []
+sumarN e (x:xs) = (e + x) : sumarN e xs
+
+sumarElPrimero :: [Integer] -> [Integer]
+sumarElPrimero (x:xs) = sumarN x (x:xs)
+
+sumarElUltimo :: [Integer] -> [Integer]
+sumarElUltimo (x:xs) = sumarN (ultimo (xs)) (x:xs)
+
+pares :: [Integer] -> [Integer] 
+pares [] = []
+pares (x:xs)
+    | mod x 2 == 0 = x:pares xs
+    | otherwise = pares xs
+
+multiplosDeN :: Integer -> [Integer] -> [Integer]
+multiplosDeN e [] = []
+multiplosDeN e (x:xs) 
+    | mod x e == 0 = x : multiplosDeN e xs
+    | otherwise = multiplosDeN e xs
+
+ordenarBis :: [Integer] -> [Integer]
+ordenarBis (s) = ordenar (quitarElem (maximo (s)) (s)) ++ [maximo (s)]
+
+
+sacarBlancosRepetidos :: [Char] -> [Char]
+sacarBlancosRepetidos s = sacarEspaciosDelante (sacarEspaciosDetras (sacarBlancoss (s)))
+
+sacarEspaciosDelante :: [Char] -> [Char]
+sacarEspaciosDelante (x:xs) 
+    | x == ' ' = sacarEspaciosDelante (xs)
+    | otherwise = x : xs
+
+sacarEspaciosDetras :: [Char] -> [Char]
+sacarEspaciosDetras (x:xs) 
+    | ultimo xs == ' ' = sacarEspaciosDetras (x:principio xs)
+    | otherwise = (x:xs)
+
+sacarBlancoss :: [Char] -> [Char]
+sacarBlancoss (x:[]) 
+    | x == ' ' = []
+    | otherwise = [x]
+sacarBlancoss (x:xs) 
+    | x == head xs && x == ' ' = sacarBlancoss (xs)
+    | otherwise = x : sacarBlancoss (xs)
