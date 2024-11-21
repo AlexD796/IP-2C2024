@@ -1,3 +1,7 @@
+{-OBSERVACIONES: el punto 4 entero de la guia5...................... terminar..
+cant digitos!!! iesimodigito!!!! nEsimoPrimo !!! sumaINicialdePrimos!!!
+-}
+           
                 --------GUIA 2--------
 
 duplicar :: Integer -> Integer
@@ -260,10 +264,6 @@ ultimo :: [t] -> t
 ultimo (x:[]) = x
 ultimo (x:xs) = ultimo xs
 
-principio :: [t] -> [t]
-principio (x:[]) = [x]
-principio (x:xs) = x : principio xs
-
 reverso :: [t] -> [t]
 reverso (x:[]) = [x]
 reverso (x:xs) = reverso xs ++ [x]
@@ -351,6 +351,10 @@ multiplosDeN e (x:xs)
 ordenarBis :: [Integer] -> [Integer]
 ordenarBis (s) = ordenar (quitarElem (maximo (s)) (s)) ++ [maximo (s)]
 
+principio :: [Char] -> [Char]
+principio [] = " "
+principio (x:[]) = []
+principio (x:xs) = x : principio xs
 
 sacarBlancosRepetidos :: [Char] -> [Char]
 sacarBlancosRepetidos [] = []
@@ -369,40 +373,30 @@ contarPalabrasAux (x:xs)
     | otherwise = contarPalabrasAux xs
 
 
-{--
-sacarBlancosRepetidos :: [Char] -> [Char]
-sacarBlancosRepetidos [] = []
-sacarBlancosRepetidos [x] 
-    | x == ' ' = []
-    | otherwise = [x]
-sacarBlancosRepetidos s = sacarEspaciosDelante (sacarEspaciosDetras (sacarBlancoss (s)))
+palabras :: [Char] -> [[Char]]
+palabras s = palabrasAux (listaSinEspacios (s)) -- si no hago esto la primera palabra si empiexa con "" lo toma como palabra
 
-sacarEspaciosDelante :: [Char] -> [Char]
-sacarEspaciosAdelante [] = []
-sacarEspaciosAdelante [x] = [x]
-sacarEspaciosDelante (x:xs) 
-    | x == ' ' = sacarEspaciosDelante (xs)
-    | otherwise = x : xs
+palabrasAux :: [Char] -> [[Char]]
+palabrasAux [] = []
+palabrasAux s = [(primeraP s)] ++ palabras (sacarPrimeraP (s))
 
-sacarEspaciosDetras :: [Char] -> [Char]
-sacarEspaciosDetras [] = []
-sacarEspaciosDetras [x] = [x]
-sacarEspaciosDetras (x:xs) 
-    | ultimo xs == ' ' = sacarEspaciosDetras (x:principio xs)
+listaSinEspacios :: [Char] -> [Char]
+listaSinEspacios s = quitarEspaciosAdelante (quitarEspaciosAtras (sacarBlancosRepetidos s))
+
+quitarEspaciosAdelante :: [Char] -> [Char]
+quitarEspaciosAdelante [] = []
+quitarEspaciosAdelante (x:xs)
+    | x == ' ' = quitarEspaciosAdelante xs
     | otherwise = (x:xs)
 
-sacarBlancoss :: [Char] -> [Char]
-sacarBlancoss [] = []
-sacarBlancoss (x:[]) 
-    | x == ' ' = []
+quitarEspaciosAtras :: [Char] -> [Char]
+quitarEspaciosAtras [] = []
+quitarEspaciosAtras (x:[]) -- necesario sino se rompe en " " etc
+    | x == ' '  = [] 
     | otherwise = [x]
-sacarBlancoss (x:xs) 
-    | x == head xs && x == ' ' = sacarBlancoss (xs)
-    | otherwise = x : sacarBlancoss (xs)
-
-palabras :: [Char] -> [[Char]]
-palabra [] = []
-palabras s = sacarBlancosRepetidos(primeraP (s)) : palabras (sacarPrimeraP (sacarBlancosRepetidos (s)))
+quitarEspaciosAtras (x:xs)
+    | ultimo (x:xs) == ' ' = quitarEspaciosAtras (x:principio xs) --no se por qué si pones ultimo xs en vez de ultimo (x:xs) se indefine
+    | otherwise = (x:xs)
 
 primeraP :: [Char] -> [Char]
 primeraP [] = []
@@ -415,7 +409,16 @@ sacarPrimeraP [] = []
 sacarPrimeraP (x:xs) 
     | x /= ' ' = sacarPrimeraP xs
     | otherwise = xs
---}
+
+palabraMasLarga :: [Char] -> [Char]
+palabraMasLarga s = palabraMasLargaAux (listaSinEspacios s)
+
+palabraMasLargaAux :: [Char] -> [Char]
+palabraMasLargaAux s 
+    | sacarPrimeraP s == [] = primeraP s --si hay una sola palabra es porque descarto todas las otras mas grandes y la primeraP es efectivamente la mas grande
+    | longitud (primeraP xs) > longitud (palabraMasLargaAuxiliar(sacarPrimeraP s)) = primeraP s --si esto se cumple la primera palabra era la mas grande
+    | otherwise = palabraMasLargaAuxiliar (sacarPrimeraP s) --sino saca la primera palabra y sigue recursionando
+
 
 sumaAcumulada :: (Num t) => [t] -> [t]
 sumaAcumulada [] = []
