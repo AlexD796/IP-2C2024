@@ -64,18 +64,28 @@ s2 = [4]
 
 #print (mezclar (s1,s2))
 
-def frecuencia_posiciones_por_caballo(caballos: list[str], carreras: dict[str,list[str]]) -> dict[str.list[int]]:
+def frecuencia_posiciones_por_caballo(caballos: list[str], carreras: dict[str,list[str]]) -> dict[str,list[int]]:
     res:dict[str.list[int]]={}
 
     for resultados in carreras.values():
         for nombre in caballos:
             if nombre not in res.keys():
-                res[nombre] = posiciones_carreras (carreras, nombre)
+                res[nombre] = posiciones_carreras (carreras, nombre, len (resultados))
 
-def posiciones_carreras (carreritas: dict[str,list[str]], nombre_esp:str):
-    res=[]
-    contador:int=0
+    return res
+
+def posiciones_carreras (carreritas: dict[str,list[str]], nombre_esp:str, e:int):
+    res= [0]*e
+
     for resultados in carreritas.values():
-        for i in range (len(carreritas.values())):
+        for i in range (e):
             if resultados[i] == nombre_esp:
-                contador+=1
+                res[i] += 1
+
+    return res
+
+
+#c= ["linda", "petisa", "mister", "luck" ]
+#carre= {"carrera1":["linda", "petisa", "mister", "luck"], "carrera2":["petisa", "mister", "linda", "luck"], "carrera3":["petisa", "mister", "linda", "luck"]}
+
+#print (frecuencia_posiciones_por_caballo (c, carre))
