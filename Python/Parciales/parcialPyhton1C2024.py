@@ -148,7 +148,7 @@ def nivel_de_ocupacion(camas_por_piso:list[list[bool]]) -> list[float]:
     return res
 
 info = [True,False], [False,False], [True,True],[True,False]
-print (nivel_de_ocupacion(info))
+#print (nivel_de_ocupacion(info))
 
 """
 4) Quiénes trabajaron más? (2 puntos)
@@ -161,35 +161,32 @@ problema empleados_del_mes(horas:dicc⟨Z,seq⟨Z⟩⟩) : seq⟨Z⟩ {
   asegura: {Para todo ID de claves de horas, si la suma de sus valores es el máximo de la suma de elementos de horas de los otros IDs, entonces ID pertences a res}
 }
 """
-
+"""
 def empleados_del_mes(horas:dict[int, list[int,int]]) -> list[int]:
     aux: list[int] = []
     res: list[int] = []
     id_empleado:list[int]=[]
-    horas_por_empleado: dict[int, int] = {}
+    horas_por_empleado: list[int] = []
     max:int=0
 
     for v, lista in horas.items():
-        horas_por_empleado [v] = suma_total (lista)
+        horas_por_empleado.append (suma_total (lista))
         id_empleado.append(v)
 
-    for i in range (len(horas_por_empleado.values())-1):
-        suma = horas_por_empleado.values()
+    for i in range (len(horas_por_empleado)-1):
+        suma = horas_por_empleado
         
         if suma[i] > suma[i+1]:
-            max = suma [i]
+          max = suma [i]
 
         elif suma[i] == suma [i+1]:
-            aux.append (i, i+1)
-            
-    suma = horas_por_empleado.values()
+            aux.append (i)
+            aux.append (i+1)
 
-    for i in aux:
-      elem = suma[i] 
-      
+    for i in range (0,len(aux)):
+      res.append(id_empleado[aux[i]])
 
-
-
+      return res
 
 def suma_total (s:list[int]) -> int:
     res:int=0
@@ -198,5 +195,46 @@ def suma_total (s:list[int]) -> int:
         res+=n
 
     return res
+"""
 
-    
+#h2 = {"111": [1, 2, 3], "222": [2, 3, 4], "333": [4,5,6], "444": [4,5,6]}
+def empleados_del_mes(horas:dict[int, list[int,int]]) -> list[int]:
+    lista_horas:list[tuple[int,list[int]]] = list(horas.items()) #lista tuplas con clave y valor
+    lista_horas_totales:list[tuple[str,int]] = []
+
+    for id, lista in lista_horas:
+        suma_horas:int = 0
+        for i in range (len (lista)):
+            suma_horas += lista [i]
+        lista_horas_totales.append ((id, suma_horas)) 
+
+      
+    maximos = []
+    max = lista_horas_totales [0]
+    for i in range (len (lista_horas_totales)):
+        if max[1] < lista_horas_totales [i] [1]: #??
+          max = lista_horas_totales [i]
+
+    for i in range (len (lista_horas_totales)):
+        if lista_horas_totales [i][1] == max[1]:
+            maximos.append (lista_horas_totales [i][0])
+
+    return maximos
+
+
+#h1 = {"111": [1, 2, 3], "222": [2, 3, 4], "333": [4,5,6]}
+#print(empleados_del_mes(h1)) #["333"]
+
+h2 = {"111": [1, 2, 3], "222": [2, 3, 4], "333": [4,5,6], "444": [4,5,6]}
+print(empleados_del_mes(h2)) #["333","444"]
+
+print (empleados_del_mes (h1))
+
+"""
+h2 = {"111": [1, 2, 3], "222": [2, 3, 4], "333": [4,5,6], "444": [4,5,6]}
+print(empleados_del_mes(h2)) #["333","444"]
+h3 = {"111": [1, 2, 3], "444": [6,7,8], "222": [2, 3, 4], "333": [4,5,6]}
+print(empleados_del_mes(h3)) #["444"]
+h4 = {"111": [1, 2, 3], "444": [6,7,8], "222": [8,9,10], "333": [4,5,6], "444": [8,9,10], "555": [6,7,8]}
+print(empleados_del_mes(h4)) #["222","444"] o ["444","222"] (en los asegura no se habla del orden)
+"""
