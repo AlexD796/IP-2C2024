@@ -163,28 +163,32 @@ problema empleados_del_mes(horas:dicc⟨Z,seq⟨Z⟩⟩) : seq⟨Z⟩ {
 """
 
 def empleados_del_mes(horas:dict[int, list[int,int]]) -> list[int]:
-    aux: list[tuple[int,int]] = []
+    aux: list[int] = []
     res: list[int] = []
+    id_empleado:list[int]=[]
+    horas_por_empleado: dict[int, int] = {}
+    max:int=0
 
     for v, lista in horas.items():
-        aux.append ((v,(suma_total (lista))))
+        horas_por_empleado [v] = suma_total (lista)
+        id_empleado.append(v)
 
-    res = encontrar_maximos(aux)
+    for i in range (len(horas_por_empleado.values())-1):
+        suma = horas_por_empleado.values()
+        
+        if suma[i] > suma[i+1]:
+            max = suma [i]
 
-    return res
+        elif suma[i] == suma [i+1]:
+            aux.append (i, i+1)
+            
+    suma = horas_por_empleado.values()
 
-def encontrar_maximos (l:list[tuple[int,int]]) -> list[int]:
-    res:list[int]
-    max:int=-1
+    for i in aux:
+      elem = suma[i] 
+      
 
-    for i in range (len(l)-1):
-        if l[i] > l[i+1]:
-             max = l[i]
-    
-    l.pop(max)
 
-    if pertenece
-          
 
 
 def suma_total (s:list[int]) -> int:
