@@ -74,7 +74,7 @@ def frecuencia_posiciones_por_caballo(caballos: list[str], carreras: dict[str,li
 
     return res
 
-def posiciones_carreras (carreritas: dict[str,list[str]], nombre_esp:str, e:int):
+def posiciones_carreras (carreritas: dict[str,list[str]], nombre_esp:str, e:int) -> list[int]:
     res= [0]*e
 
     for resultados in carreritas.values():
