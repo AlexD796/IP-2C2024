@@ -85,38 +85,114 @@ def mostrar_cola (c:Cola[int]):
     while not contenedor.empty():
         c.put(contenedor.get())
 
-#mostrar_cola (c1)
 
 def orden_de_atencion (urgentes: Cola[int], postergables: Cola[int]) -> Cola[int]:
     res:Cola[int]=Cola()
     c_urg:list[int] = []
     c_pos:list[int] = []
 
-    while not (urgentes.empty() and postergables.empty()):
-        elem:int= urgentes.get()
-        c_urg.append(elem) and res.put(elem)
+    while not (urgentes.empty() and postergables.empty()): #pongo lo de las colas en dos listas
+        c_urg.append(urgentes.get()) 
+        c_pos.append(postergables.get()) 
 
-        elem2 = postergables.get()
-        c_pos.append(elem2) and res.put(elem2) 
+    for i in range (len(c_urg)): #pongo en la cola final lo que me pide con un for porque los datos están en listas
+        res.put(c_urg[i])
+        res.put(c_pos[i])
 
-    while not (c_urg.empty() and c_pos.empty()):
-        urgentes.put(c_urg.get())
-        postergables.put(c_pos.get())
+    for i in range (len(c_urg)): #restauro variables in de urgentes y postergables!
+        urgentes.put(c_urg[i])
+        postergables.put(c_pos[i])
 
     return res
 
-c1 = Cola()
-c1.put(8) #principio
-c1.put(10)
-c1.put(11)
-c1.put(2)
-c1.put(9) #final
+#c1 = Cola()
+#c1.put(8) #principio
+#c1.put(10)
+#c1.put(11)
+#c1.put(2)
+#c1.put(9) #final
 
-c2 = Cola()
-c2.put(15) #principio
-c2.put(3)
-c2.put(1)
-c2.put(99)
-c2.put(43) #final
+#c2 = Cola()
+#c2.put(15) #principio
+#c2.put(3)
+#c2.put(1)
+#c2.put(99)
+#c2.put(43) #final
 
-mostrar_cola (orden_de_atencion (c1,c2))
+#mostrar_cola (orden_de_atencion (c1,c2))
+
+"""
+3) Camas ocupadas en el hospital (2 puntos)
+Queremos saber qué porcentaje de ocupación de camas hay en el hospital. El hospital se representa por una matriz en donde las filas son los pisos, y las columnas son las camas. Los valores de la matriz son booleanos que indican si la cama está ocupada o no. Si el valor es verdadero (True) indica que la cama está ocupada. Se nos pide programar en Python una función que devuelve una secuencia de enteros, indicando la proporción de camas ocupadas en cada piso.
+
+problema nivel_de_ocupacion(camas_por_piso:seq⟨seq⟨Bool⟩⟩) : seq⟨R⟩ {
+  requiere: {Todos los pisos tienen la misma cantidad de camas.}
+  requiere: {Hay por lo menos 1 piso en el hospital.}
+  requiere: {Hay por lo menos una cama por piso.}
+  asegura: {|res| = |camas|}
+  asegura: {Para todo 0<= i < |res| se cumple que res[i] es igual a la cantidad de camas ocupadas del piso i dividido el total de camas del piso i)}
+}
+"""
+
+def nivel_de_ocupacion(camas_por_piso:list[list[bool]]) -> list[float]:
+    res:list[bool] = []
+    contador:int=0
+
+    for piso in camas_por_piso:
+        for cama in piso:
+            if cama == True:
+                contador +=1
+        res.append(contador /len(piso))
+        contador=0
+
+    return res
+
+info = [True,False], [False,False], [True,True],[True,False]
+print (nivel_de_ocupacion(info))
+
+"""
+4) Quiénes trabajaron más? (2 puntos)
+Dado un diccionario con la cantidad de horas trabajadas por empleado, en donde la clave es el ID del empleado y el valor es una lista de las horas trabajadas por día, queremos saber quienes trabajaron más para darles un premio. Se deberá buscar la o las claves para la cual se tiene el máximo valor de cantidad total de horas, y devolverlas en una lista.
+
+problema empleados_del_mes(horas:dicc⟨Z,seq⟨Z⟩⟩) : seq⟨Z⟩ {
+  requiere: {No hay valores en horas que sean listas vacías}
+  asegura: {Si ID pertence a res entonces ID pertence a las claves de horas}
+  asegura: {Si ID pertenece a res, la suma de sus valores de horas es el máximo de la suma de elementos de horas de todos los otros IDs}
+  asegura: {Para todo ID de claves de horas, si la suma de sus valores es el máximo de la suma de elementos de horas de los otros IDs, entonces ID pertences a res}
+}
+"""
+
+def empleados_del_mes(horas:dict[int, list[int,int]]) -> list[int]:
+    aux: list[tuple[int,int]] = []
+    res: list[int] = []
+
+    for v, lista in horas.items():
+        aux.append ((v,(suma_total (lista))))
+
+    res = encontrar_maximos(aux)
+
+    return res
+
+def encontrar_maximos (l:list[tuple[int,int]]) -> list[int]:
+    res:list[int]
+    max:int=-1
+
+    for i in range (len(l)-1):
+        if l[i] > l[i+1]:
+             max = l[i]
+    
+    l.pop(max)
+
+    if pertenece
+          
+
+
+def suma_total (s:list[int]) -> int:
+    res:int=0
+
+    for n in s:
+        res+=n
+
+    return res
+
+    
