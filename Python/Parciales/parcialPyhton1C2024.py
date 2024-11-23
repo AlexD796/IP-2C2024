@@ -3,6 +3,9 @@ from queue import LifoQueue as Pila
 p = Pila ()
 c = Cola ()
 
+##########################################################
+#EJERCICIO 4: TRABAJADOR PREMIADO
+##########################################################
 """1) Alerta Enfermedades Infecciosas (3 puntos)
 
 Necesitamos detectar la aparición de posibles epidemias. Para esto contamos con un lista de enfermedades infecciosas y los registros de atención por guardia dados por una lista expedientes. Cada expediente es una tupla con ID paciente y enfermedad que motivó la atención. Debemos devolver un diccionario cuya clave son las enfermedades infecciosas y su valor es la proporción de pacientes que se atendieron por esa enfermedad. En este diccionario deben aparecer solo aquellas enfermedades infecciosas cuya proporción supere cierto umbral.
@@ -161,76 +164,44 @@ problema empleados_del_mes(horas:dicc⟨Z,seq⟨Z⟩⟩) : seq⟨Z⟩ {
   asegura: {Para todo ID de claves de horas, si la suma de sus valores es el máximo de la suma de elementos de horas de los otros IDs, entonces ID pertences a res}
 }
 """
-"""
-def empleados_del_mes(horas:dict[int, list[int,int]]) -> list[int]:
-    aux: list[int] = []
-    res: list[int] = []
-    id_empleado:list[int]=[]
-    horas_por_empleado: list[int] = []
-    max:int=0
-
-    for v, lista in horas.items():
-        horas_por_empleado.append (suma_total (lista))
-        id_empleado.append(v)
-
-    for i in range (len(horas_por_empleado)-1):
-        suma = horas_por_empleado
-        
-        if suma[i] > suma[i+1]:
-          max = suma [i]
-
-        elif suma[i] == suma [i+1]:
-            aux.append (i)
-            aux.append (i+1)
-
-    for i in range (0,len(aux)):
-      res.append(id_empleado[aux[i]])
-
-      return res
-
-def suma_total (s:list[int]) -> int:
-    res:int=0
-
-    for n in s:
-        res+=n
-
-    return res
-"""
 
 #h2 = {"111": [1, 2, 3], "222": [2, 3, 4], "333": [4,5,6], "444": [4,5,6]}
 def empleados_del_mes(horas:dict[int, list[int,int]]) -> list[int]:
     lista_horas:list[tuple[int,list[int]]] = list(horas.items()) #lista tuplas con clave y valor
+    empleado_horas_totales:dict[int,int] = {}
     lista_horas_totales:list[tuple[str,int]] = []
+    res:list[int] = []
 
-    for id, lista in lista_horas:
-        suma_horas:int = 0
-        for i in range (len (lista)):
-            suma_horas += lista [i]
-        lista_horas_totales.append ((id, suma_horas)) 
+    for c, v in lista_horas:
+        suma:int=0
+        for numero in v:
+            suma += numero
 
-      
-    maximos = []
-    max = lista_horas_totales [0]
-    for i in range (len (lista_horas_totales)):
-        if max[1] < lista_horas_totales [i] [1]: #??
-          max = lista_horas_totales [i]
+        empleado_horas_totales [c] = suma #hago dicc con id : suma total de las horas
+        lista_horas_totales.append (suma) #hago lista con sumas totales de diferentes empleados
 
-    for i in range (len (lista_horas_totales)):
-        if lista_horas_totales [i][1] == max[1]:
-            maximos.append (lista_horas_totales [i][0])
+    max_horas_trabajadas = maximo (lista_horas_totales) #busco maximo de la lista de sumas totales de horas
+    
+    for c, v in empleado_horas_totales.items(): # si hay más de un empleado con la misma cant de horas lo pone en la lista res
+            if v == max_horas_trabajadas:
+                res.append (c)
 
-    return maximos
+    return res
 
+def maximo (s:list[int]):
+    res:int = 0
 
-#h1 = {"111": [1, 2, 3], "222": [2, 3, 4], "333": [4,5,6]}
-#print(empleados_del_mes(h1)) #["333"]
-
+    for dig in s:
+        if dig > res:
+            res = dig
+    
+    return res
+    
+"""
+h1 = {"111": [1, 2, 3], "222": [2, 3, 4], "333": [4,5,6]}
+print(empleados_del_mes(h1)) #["333"]
 h2 = {"111": [1, 2, 3], "222": [2, 3, 4], "333": [4,5,6], "444": [4,5,6]}
 print(empleados_del_mes(h2)) #["333","444"]
-
-print (empleados_del_mes (h1))
-
-"""
 h2 = {"111": [1, 2, 3], "222": [2, 3, 4], "333": [4,5,6], "444": [4,5,6]}
 print(empleados_del_mes(h2)) #["333","444"]
 h3 = {"111": [1, 2, 3], "444": [6,7,8], "222": [2, 3, 4], "333": [4,5,6]}
