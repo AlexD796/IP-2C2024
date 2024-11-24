@@ -375,8 +375,6 @@ def torneo_de_gallinas(estrategias: dict[str,str]) -> dict[str,int]:
     jugadores:list[str] = list(estrategias.keys())
     aux:list[tuple[str,str]] = []
     res: dict[str,list[int]] = {}
-    p1:int
-    p2:int
 
     for j in range (len(jugadores)-1): #j= 0,1,2,
         for i in range (len(jugadores)-1): #i= 0,1,2
@@ -393,40 +391,20 @@ def torneo_de_gallinas(estrategias: dict[str,str]) -> dict[str,int]:
 
 
         if j1 == "desvia" and j2 == "no desvia":
-            p1 = res.pop((dupla[0]))
-            p1 -= 15
-            res [dupla[0]] = p1
-
-            p2 = res.pop(dupla[1])    
-            p2 +=  10
-            res [dupla[1]] = p2
+            res [dupla[0]] -= 15
+            res [dupla[1]] += 10
         
         if j2 == "desvia" and j1 == "no desvia":
-            p2 = res.pop(dupla[1])
-            p2 -= 15
-            res [dupla[1]] = p2
-
-            p1 = res.pop(dupla[0])    
-            p1 +=  10
-            res [dupla[0]] = p1
+            res [dupla[1]] -= 15
+            res [dupla[0]] += 10
 
         if j1 == "no desvia" and j2 == "no desvia":
-            p1 = res.pop(dupla[0])
-            p1 -= 5
-            res [dupla[0]] = p1
-
-            p2 = res.pop(dupla[1])    
-            p2 -= 5
-            res [dupla[1]] = p2
+            res [dupla[0]] -= 5
+            res [dupla[1]] -= 5
 
         if j1 == "desvia" and j2 == "desvia":
-            p1 = res.pop(dupla[0])
-            p1 -= 10
-            res [dupla[0]] = p1
-
-            p2 = res.pop(dupla[1])    
-            p2 -= 10
-            res [dupla[1]] = p2
+            res [dupla[0]] -= 10
+            res [dupla[1]] -= 10
 
     return res
 
@@ -434,3 +412,66 @@ def torneo_de_gallinas(estrategias: dict[str,str]) -> dict[str,int]:
 
 #dic = {"a" : "desvia", "b" : "no desvia", "c" : "no desvia", "d": "desvia"}
 #print(torneo_de_gallinas (dic))
+"""
+def torneo_de_gallinas_bis(estrategias: dict[str, str]) -> dict[str, int]:
+    puntajes: dict[str, int] = {}
+    
+    for jugador in estrategias.items():
+        if jugador not in puntajes.keys():
+            puntajes[jugador[0]] = 0
+            for contrincante in estrategias.items():
+                if jugador != contrincante:
+                    if jugador[1] == "me desvío siempre" and contrincante[1] == "me desvío siempre":
+                        puntajes[jugador[0]] -= 10
+                    elif jugador[1] == "me la banco y no me desvío" and contrincante[1] == "me la banco y no me desvío":
+                        puntajes[jugador[0]] -= 5
+                    elif jugador[1] == "me la banco y no me desvío" and contrincante[1] == "me desvío siempre":
+                        puntajes[jugador[0]] += 10
+                    elif jugador[1] == "me desvío siempre" and contrincante[1] == "me la banco y no me desvío":
+                        puntajes[jugador[0]] -= 15
+    return puntajes
+
+#e2 = {"leo": "me desvío siempre", "rodo": "me la banco y no me desvío", "bale": "me desvío siempre"}
+#print(torneo_de_gallinas_bis (e2))
+"""
+
+    #ojojo +1 -> jojo -> ojo +1 -> jo -> o +1 -> 3
+    #neuquen +1 -> euquen 0 -> uquen 0 -> quen 0 -> uen 0 -> en 0 -> n +1=> 2 
+    #"Diego", "iego", "ego", "go", "o" -> 1
+    #ogeid geid eid id d -> 1
+    #jeala ->2 #alaej alaej alae ala +1 al a->2
+def cuantos_sufijos_son_palindromos(texto:str) -> int:
+    texto_alrevez:str=""
+    contador:int=0
+
+    for letra in texto:
+        texto_alrevez = letra + texto_alrevez
+
+    for i in range (len (texto_alrevez)): #i=0,1,2,3,4 #ogeid -> ogei -> oge -> og -> o
+        if es_palindromo (texto_alrevez) == True:
+            contador+=1 
+            texto_alrevez = sacar_primera_p (texto_alrevez)
+        else:
+            texto_alrevez = sacar_primera_p (texto_alrevez)
+
+    return contador
+
+def es_palindromo (t:str) -> bool:
+    alrevez : str = ""
+
+    for letra in t:
+        alrevez = letra + alrevez 
+
+    return alrevez == t
+
+
+def sacar_primera_p (t:str) -> str:
+    nueva:str=""
+
+    for i in range (1,len(t)):
+        nueva+= t[i]
+
+    return nueva
+
+
+print (cuantos_sufijos_son_palindromos(""))
