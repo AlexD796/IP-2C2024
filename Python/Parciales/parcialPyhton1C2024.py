@@ -212,9 +212,9 @@ print(empleados_del_mes(h4)) #["222","444"] o ["444","222"] (en los asegura no s
 """
 
 
-##########################################################
+#############################################################################
 ####  PARCIAL 2 ------- EJERCICIO 3  - RACHA MAS LARGA & TIEMPO MAS LARGO ###
-##########################################################
+#############################################################################
 
 def promedio_de_salidas (registro: dict[str, list[int]]) -> dict[str, tuple[int,float]]:
     res:dict[str, tuple[int,float]] = {}
@@ -302,3 +302,134 @@ def cumple_condicion (s: list[int]) -> bool:
 #t = [[2,3,6,9],[0,0,0,0],[0,0,3,0],[0,0,61,0],[2,11,9,0],[0,0,4,1],[0,0,4,0]] # [2,3,6]
 #d = [[2,3,6,9],[0,0,0,0]] # []
 #print (escape_en_solitario (d))
+
+
+#############################################################################
+####  PARCIAL 3 ------- EJERCICIO                                         ###
+#############################################################################
+
+# 1) Fila en ExactaBank (1 puntos)
+# En el banco ExactaBank los clientes hacen cola para ser atendidos por un representante. Los clientes son representados por
+# las tuplas (nombre, tipo afiliado) donde la pimera componente es el nombre y el tipo afiliado puede ser "comun" o "vip".
+# Se nos pide implementar una función en python que dada una cola de clientes del banco, devuelva una nueva cola con los
+# mismos clientes pero en donde los clientes vip están primero que los clientes comunes manteniendo el orden original de los 
+# clientes vips y los comunes entre sí.
+
+def reordenar_cola_priorizando_vips(filaClientes: Cola[tuple[str,str]])-> Cola[str]:
+    c_comun:list[tuple[str,str]] = []
+    c_vip: list[tuple[str,str]] = []
+    res :Cola[tuple[str,str]] = Cola ()
+    contenedor: Cola[tuple[str,str]] = Cola ()
+
+    while not filaClientes.empty(): #pongo en 2 listas diferentes a los clientes vip y comunes
+        elem = filaClientes.get()   #y todos los elem en otra lista
+
+        if elem[1] == "comun":
+            c_comun.append (elem)
+            contenedor.put (elem)
+        else:
+            c_vip.append (elem)
+            contenedor.put (elem)
+
+    while not (contenedor.empty()): #recupero variable in
+        filaClientes.put (contenedor.get())
+
+    for i in range (len (c_vip)): #pongo en la cola res lo que me piden
+        res.put (c_vip[i][0])
+
+    for i in range (len(c_comun)):
+        res.put (c_comun[i][0])
+
+    return res
+
+
+def mostrar_cola (c:Cola[str]):
+    contenedor:Cola[str]=Cola()
+
+    while not c.empty():
+        elem = c.get()
+        print (elem)
+        contenedor.put(elem)
+
+    while not contenedor.empty():
+        c.put(contenedor.get())
+
+#h = Cola ()
+#h.put (("h", "vip"))
+#h.put (("a", "comun")) #principio
+#h.put (("b", "vip"))
+#h.put (("c", "comun"))
+#h.put (("d", "vip")) 
+#h.put (("j", "comun"))
+#h.put (("k", "comun")) #final
+
+#mostrar_cola (reordenar_cola_priorizando_vips (h))
+
+
+
+#j = [1,2]
+#j.pop ()
+#print (j)
+
+def torneo_de_gallinas(estrategias: dict[str,str]) -> dict[str,int]:
+    jugadores:list[str] = list(estrategias.keys())
+    aux:list[tuple[str,str]] = []
+    res: dict[str,list[int]] = {}
+    p1:int=0
+    p2:int=0
+
+    for j in range (len(jugadores)-1): #j= 0,1,2,
+        for i in range (len(jugadores)-1): #i= 0,1,2
+                indice:int = (len(jugadores)-1) #indice = 3
+                aux.append((jugadores [indice], jugadores [i])) #aux = (d,a)(d,b)(d,c) -> aux=(d,a)(d,b)(d,c)(c,a)(c,b)(b,a)
+        jugadores.pop()
+
+    for player in jugadores: #hago diccionario res con mis jugadores y todos en 0 puntos
+        res [player] = 0
+
+    for dupla in aux:
+        j1 = estrategias [dupla[0]] #j1= desvia o no
+        j2 = estrategias [dupla[1]] #j2= adesvia o no
+
+        if j1 == "desvia" and j2 == "no desvia":
+            p1 = res.pop(j1)
+            p1 -= 15
+            res [dupla[0]] = p1
+
+            p2 = res.pop(j2)    
+            p2 +=  10
+            res [dupla[1]] = p2
+        
+        if j2 == "desvia" and j1 == "no desvia":
+            p2 = res.pop(j2)
+            p2 -= 15
+            res [dupla[1]] = p2
+
+            p1 = res.pop(j1)    
+            p1 +=  10
+            res [dupla[0]] = p1
+
+        if j1 == "no desvia" and j2 == "no desvia":
+            p1 = res.pop(j1)
+            p1 -= 5
+            res [dupla[0]] = p1
+
+            p2 = res.pop(j2)    
+            p2 -= 5
+            res [dupla[1]] = p2
+
+        if j1 == "desvia" and j2 == "desvia":
+            p1 = res.pop(j1)
+            p1 -= 10
+            res [dupla[0]] = p1
+
+            p2 = res.pop(j2)    
+            p2 -= 10
+            res [dupla[1]] = p2
+
+    return res
+
+
+
+dic = {"a" : "desvia", "b" : "desvia" , "c" : "no desvia", "d": "desvia"}
+print(torneo_de_gallinas (dic))
