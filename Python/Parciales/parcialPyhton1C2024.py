@@ -375,8 +375,8 @@ def torneo_de_gallinas(estrategias: dict[str,str]) -> dict[str,int]:
     jugadores:list[str] = list(estrategias.keys())
     aux:list[tuple[str,str]] = []
     res: dict[str,list[int]] = {}
-    p1:int=0
-    p2:int=0
+    p1:int
+    p2:int
 
     for j in range (len(jugadores)-1): #j= 0,1,2,
         for i in range (len(jugadores)-1): #i= 0,1,2
@@ -384,46 +384,47 @@ def torneo_de_gallinas(estrategias: dict[str,str]) -> dict[str,int]:
                 aux.append((jugadores [indice], jugadores [i])) #aux = (d,a)(d,b)(d,c) -> aux=(d,a)(d,b)(d,c)(c,a)(c,b)(b,a)
         jugadores.pop()
 
-    for player in jugadores: #hago diccionario res con mis jugadores y todos en 0 puntos
+    for player in estrategias.keys(): #hago diccionario res con mis jugadores y todos en 0 puntos
         res [player] = 0
 
     for dupla in aux:
-        j1 = estrategias [dupla[0]] #j1= desvia o no
+        j1 = estrategias [(dupla[0])] #j1= desvia o no
         j2 = estrategias [dupla[1]] #j2= adesvia o no
 
+
         if j1 == "desvia" and j2 == "no desvia":
-            p1 = res.pop(j1)
+            p1 = res.pop((dupla[0]))
             p1 -= 15
             res [dupla[0]] = p1
 
-            p2 = res.pop(j2)    
+            p2 = res.pop(dupla[1])    
             p2 +=  10
             res [dupla[1]] = p2
         
         if j2 == "desvia" and j1 == "no desvia":
-            p2 = res.pop(j2)
+            p2 = res.pop(dupla[1])
             p2 -= 15
             res [dupla[1]] = p2
 
-            p1 = res.pop(j1)    
+            p1 = res.pop(dupla[0])    
             p1 +=  10
             res [dupla[0]] = p1
 
         if j1 == "no desvia" and j2 == "no desvia":
-            p1 = res.pop(j1)
+            p1 = res.pop(dupla[0])
             p1 -= 5
             res [dupla[0]] = p1
 
-            p2 = res.pop(j2)    
+            p2 = res.pop(dupla[1])    
             p2 -= 5
             res [dupla[1]] = p2
 
         if j1 == "desvia" and j2 == "desvia":
-            p1 = res.pop(j1)
+            p1 = res.pop(dupla[0])
             p1 -= 10
             res [dupla[0]] = p1
 
-            p2 = res.pop(j2)    
+            p2 = res.pop(dupla[1])    
             p2 -= 10
             res [dupla[1]] = p2
 
@@ -431,5 +432,5 @@ def torneo_de_gallinas(estrategias: dict[str,str]) -> dict[str,int]:
 
 
 
-dic = {"a" : "desvia", "b" : "desvia" , "c" : "no desvia", "d": "desvia"}
-print(torneo_de_gallinas (dic))
+#dic = {"a" : "desvia", "b" : "no desvia", "c" : "no desvia", "d": "desvia"}
+#print(torneo_de_gallinas (dic))
