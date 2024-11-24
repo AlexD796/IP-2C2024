@@ -4,8 +4,9 @@ p = Pila ()
 c = Cola ()
 
 ##########################################################
-#EJERCICIO 4: TRABAJADOR PREMIADO
+####PARCIAL 1 ------- EJERCICIO 4: TRABAJADOR PREMIADO ###
 ##########################################################
+
 """1) Alerta Enfermedades Infecciosas (3 puntos)
 
 Necesitamos detectar la aparición de posibles epidemias. Para esto contamos con un lista de enfermedades infecciosas y los registros de atención por guardia dados por una lista expedientes. Cada expediente es una tupla con ID paciente y enfermedad que motivó la atención. Debemos devolver un diccionario cuya clave son las enfermedades infecciosas y su valor es la proporción de pacientes que se atendieron por esa enfermedad. En este diccionario deben aparecer solo aquellas enfermedades infecciosas cuya proporción supere cierto umbral.
@@ -209,3 +210,95 @@ print(empleados_del_mes(h3)) #["444"]
 h4 = {"111": [1, 2, 3], "444": [6,7,8], "222": [8,9,10], "333": [4,5,6], "444": [8,9,10], "555": [6,7,8]}
 print(empleados_del_mes(h4)) #["222","444"] o ["444","222"] (en los asegura no se habla del orden)
 """
+
+
+##########################################################
+####  PARCIAL 2 ------- EJERCICIO 3  - RACHA MAS LARGA & TIEMPO MAS LARGO ###
+##########################################################
+
+def promedio_de_salidas (registro: dict[str, list[int]]) -> dict[str, tuple[int,float]]:
+    res:dict[str, tuple[int,float]] = {}
+
+    for nombre, tiempos in registro.items():
+        contador:int = 0
+        suma:int = 0
+
+        for numero in tiempos:
+            if 0 < numero < 61:
+                contador +=1
+                suma += numero
+        
+        if contador !=0:
+          res [nombre] = (contador, (suma / contador))
+
+        else:
+          res [nombre] = (0,0.0)
+
+    return res
+
+#dicc = {"a": [2,45,34,16,61,0,61,55], "b": [44,12,61,0,23,23,55], "c": [44,22,1,1,45,2], "d": [0,61]} #{"a": (5, 30.4), "b": (5,31,4), "c": (6,19.1667)}
+#print (promedio_de_salidas (dicc))
+
+def tiempo_mas_rapido (tiempos_salas: list [int]) -> int:
+    res:int = -1
+    min:int=61
+    i:int=0
+
+    while i < len (tiempos_salas):
+        if (min > tiempos_salas[i]) and (0 < tiempos_salas [i] < 61):
+          min = tiempos_salas [i]
+          res:int= i 
+        i+=1
+    else:
+        i+=1
+
+    return res
+
+#l = [8,61,9,9,7,61,0,44]
+#print (tiempo_mas_rapido (l))
+
+def racha_mas_larga (tiempos: list[int])-> tuple[int,int]:
+    racha:int=0
+    mayor_racha:int=0
+    index:int=0
+
+    for i in range (len(tiempos)):
+        if 0 < tiempos[i] < 61:
+            racha+=1
+        else:
+            racha=0
+
+        if racha > mayor_racha:
+           mayor_racha = racha
+           index = i - mayor_racha + 1
+
+    return (index, index + mayor_racha - 1)
+
+#s = [8,61,23,45,53,61,8,0] # -> (2,4)
+#print (racha_mas_larga (s))
+#q = [45,53,3,61,8,0,45,60,1,73,9] #-> (0,2)
+#print (racha_mas_larga (q))
+#p = [8,61,23,0] #-> (0,0)
+#print (racha_mas_larga (p))
+
+def escape_en_solitario (amigos_por_salas: list[list[int]]) -> list[int]:
+    res:list[int]=[]
+    i:int = -1
+
+    for sala in amigos_por_salas:
+      if cumple_condicion (sala):
+          i+=1
+          res.append(i)
+      else:
+          i+=1
+
+    return res
+
+def cumple_condicion (s: list[int]) -> bool:
+    return (s[0]== 0) and (s[1]==0) and (s[2]!= 0) and (s[3]==0)
+
+    
+
+#t = [[2,3,6,9],[0,0,0,0],[0,0,3,0],[0,0,61,0],[2,11,9,0],[0,0,4,1],[0,0,4,0]] # [2,3,6]
+#d = [[2,3,6,9],[0,0,0,0]] # []
+#print (escape_en_solitario (d))
