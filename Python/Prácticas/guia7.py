@@ -282,20 +282,13 @@ def remplaza_vocales (s:str) -> str:
 
 
 def dar_vuelta_str (s:str) -> str:
-    lista:str= ""
-    for i in range(len(s)-1, -1, -1):
-        lista.apend (s[i])
-    return lista
-
-
-def dar_vuelta_str2 (s:str) -> str:
     lista:str=""
     for letra in s:
         lista = letra + lista
     return lista
 
 l = "neuquen"
-print (dar_vuelta_str2 (l)) 
+print (dar_vuelta_str (l)) 
 
 def eliminar_repetidos (s:str)-> str:
     res:int=[]
