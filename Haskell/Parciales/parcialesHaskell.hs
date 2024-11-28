@@ -177,7 +177,7 @@ mejorPromedio_bis (x:xs)
     | promedio (x) < promedio (head (xs)) = mejorPromedio_bis (xs)
     | otherwise = mejorPromedio_bis (x:tail xs)
 
---EJERCICIO 3--
+--EJERCICIO 4--
 
 --[("a", [8,8,8,8]),("b",[10,9,8,9]),("c", [10,10,10,3,10]),("d",[10,9,8,9,10])] "d" 5
 -- aprobo mas de 4 materias && es un buen alumno && promedio < del mejor promedio (él) --> true
@@ -207,4 +207,51 @@ pertenece_bis (x:xs) i
     | x == i = True
     | otherwise = pertenece_bis xs i
 
+---------------------------------------------------------------------------------------------------------------------
+{-- RECUPERATORIO SOPA DE LETRAS AGAIN--}
 
+--EJERCICIO 1--
+
+type Fila = [Integer]
+type Tablero = [Fila]
+type Posicion = (Integer,Integer)
+type Camino = [Posicion]
+
+maximo :: Tablero -> Integer
+maximo (x:[]) = maximoAux (x)
+maximo (x:xs)
+    | maximoAux x < maximoAux (head xs) = maximo (xs)
+    | otherwise = maximo (x:tail xs)
+
+maximoAux :: Fila -> Integer
+maximoAux (x:[]) = x
+maximoAux (x:xs)
+    | x < head xs = maximoAux xs
+    | otherwise = maximoAux (x:tail xs)
+
+--EJERCICIO 2--
+
+masRepetido :: Tablero -> Integer
+masRepetido l = masRepetidoAux (concatenar (l)) l
+
+masRepetidoAux :: Fila -> Tablero -> Integer
+masRepetidoAux (x:[]) l = x
+masRepetidoAux (x:xs) l
+    | cantAp (x) l < cantAp (head xs) l = masRepetidoAux (xs) l
+    | otherwise = masRepetidoAux (x:tail xs) l
+
+concatenar :: Tablero -> Fila
+concatenar (x:[]) = x
+concatenar (x:xs) = x ++ concatenar xs
+
+cantAp :: Integer -> Tablero -> Integer
+cantAp i [] = 0
+cantAp (i) (x:xs) = cantApAux i x + cantAp i xs
+
+cantApAux :: Integer -> Fila -> Integer
+cantApAux i [] = 0
+cantApAux i (x:xs)
+    | i == x = 1 + cantApAux i xs
+    | otherwise = cantApAux i xs 
+
+--EJERCICIO 3--
