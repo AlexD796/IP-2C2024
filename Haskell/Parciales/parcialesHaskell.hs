@@ -359,3 +359,42 @@ menosVotado_bis (x:[]) (v:[]) = fst x
 menosVotado_bis (x:xs) (v:vs)
     | v > head vs = menosVotado_bis (xs) (vs)
     | otherwise = menosVotado_bis (x:tail xs) (v:tail vs)
+
+---------------------------------------------------------------------------------------------------------------------
+{-- PARCIAL PERFECTOS AMIGOS--}
+
+--EJERCICIO 1--
+
+divisoresPropios :: Int -> [Int]
+divisoresPropios 1 = []
+divisoresPropios n = divisoresPropiosDesde 1 n
+
+divisoresPropiosDesde :: Int -> Int -> [Int]
+divisoresPropiosDesde i n
+    | i == n = []
+    | mod n i == 0 && i < n = i : divisoresPropiosDesde (i+1) n
+    | mod n i /= 0 && i < n = divisoresPropiosDesde (i+1) n
+
+--EJERCICIO 2--
+
+sonAmigos :: Int -> Int -> Bool
+sonAmigos x y = (sumaDivisores (divisoresPropios x) == y) && (sumaDivisores (divisoresPropios y) == x)
+
+sumaDivisores :: [Int] -> Int
+sumaDivisores [] = 0
+sumaDivisores (n:ns) = n + sumaDivisores ns
+
+--EJERCICIO 3--
+
+losPrimerosNPerfectos :: Int -> [Int]
+losPrimerosNPerfectos 1 = [6]
+losPrimerosNPerfectos n = losPrimerosNPerfectos (n-1) ++ [enesimoPerfecto n]
+
+enesimoPerfecto :: Int -> Int
+enesimoPerfecto 1 = 6
+enesimoPerfecto n = siguientePerfecto (enesimoPerfecto (n-1))
+
+siguientePerfecto :: Int -> Int
+siguientePerfecto n
+    | sumaDivisores (divisoresPropios (n+1)) == n+1 = n+1
+    | otherwise = siguientePerfecto (n+1) 
