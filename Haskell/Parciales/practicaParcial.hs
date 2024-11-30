@@ -208,9 +208,3 @@ buscarAmigos a (x:xs)
     | a == x = buscarAmigos a xs
     | sonAmigos a x = (a,x): buscarAmigos a xs
     | otherwise = buscarAmigos a xs
-
-
-aplanarConEspacios :: [[Char]] -> [Char]
-aplanarConEspacios [] = []
-aplanarConEspacios (xs:[]) = xs ++ []
-aplanarConEspacios (xs:xss) = ) ++ aplanarConEspacios xss

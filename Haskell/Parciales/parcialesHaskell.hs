@@ -398,3 +398,16 @@ siguientePerfecto :: Int -> Int
 siguientePerfecto n
     | sumaDivisores (divisoresPropios (n+1)) == n+1 = n+1
     | otherwise = siguientePerfecto (n+1) 
+
+--EJERCICIO 4--
+
+listaDeAmigos :: [Int] -> [(Int,Int)]
+listaDeAmigos [] = []
+listaDeAmigos (x:xs) = buscarAmigos x (xs) ++ listaDeAmigos xs
+
+buscarAmigos :: Int -> [Int] -> [(Int,Int)]
+buscarAmigos i [] = []
+buscarAmigos i (x:xs)
+    | i == x = buscarAmigos i xs
+    | sonAmigos i x = [(x,i)] ++ buscarAmigos i xs
+    | otherwise = buscarAmigos i xs
