@@ -255,3 +255,107 @@ cantApAux i (x:xs)
     | otherwise = cantApAux i xs 
 
 --EJERCICIO 3--
+
+valoresDecamino :: Tablero -> Camino -> Fila
+valoresDecamino tablero [] = []
+valoresDecamino tablero ((f,c):ps) = buscarNumero tablero (f,c) : valoresDecamino (tablero) (ps)
+
+buscarNumero:: Tablero -> Posicion -> Integer
+buscarNumero tablero (f,c) = enesimoDigito (encontrarFila tablero f) c
+
+enesimoDigito :: (Num t, Eq t) => [t] -> t -> t --es la misma funcion pero como son diferentes signaturas no me deja usarla jjj
+enesimoDigito (x:xs) 1 = x
+enesimoDigito (x:xs) i = enesimoDigito xs (i-1)
+
+encontrarFila :: Tablero -> Integer -> Fila
+encontrarFila (x:xs) 1 = x
+encontrarFila (x:xs) i = encontrarFila xs (i-1)
+
+--EJERCICIO 4--
+
+esCaminoFibo :: Fila -> Integer -> Bool
+esCaminoFibo (x:xs) i
+    | x /= i = False
+    | x == i = esCaminoFiboAux (x:xs) 0
+
+esCaminoFiboAux :: Fila -> Integer -> Bool
+esCaminoFiboAux [] _ = True
+esCaminoFiboAux (x:xs) i
+    | f(i) == x = esCaminoFiboAux (xs) (i+1)
+    | f(i) /= x && i > x = False
+    | otherwise = esCaminoFiboAux (x:xs) (i+1)
+
+f :: Integer -> Integer
+f(0) = 0
+f(1) = 1
+f (n) = f (n-1) + f (n-2)
+
+---------------------------------------------------------------------------------------------------------------------
+{-- PARCIAL DEMOCRACIA--}
+
+--EJERCICIO 1--
+division :: Integer -> Integer -> Float
+division a b = (fromIntegral a) / (fromIntegral b)
+
+porcentajeDeVotosAfirmativos :: [(String,String)] -> [Integer] -> Integer -> Float
+porcentajeDeVotosAfirmativos formulas votos i = division (sumaTotal (votos)) i
+
+sumaTotal :: [Integer] -> Integer
+sumaTotal [] = 0
+sumaTotal (x:xs) = x + sumaTotal xs
+
+--EJERCICIO 2--
+
+formulasInvalidas :: [(String,String)] -> Bool
+formulasInvalidas [] = False
+formulasInvalidas l = formulasInvalidasAux l l
+
+formulasInvalidasAux :: [(String,String)] -> [(String,String)] -> Bool
+formulasInvalidasAux [] _ = False
+formulasInvalidasAux (x:xs) (y:ys) 
+    | cantApariciones (fst x) (y:ys) > 1 || cantApariciones (snd x) (y:ys) > 1 = True
+    | otherwise = formulasInvalidasAux xs (y:ys)
+
+cantApariciones :: String -> [(String,String)] -> Integer
+cantApariciones i [] = 0
+cantApariciones i (x:xs)
+    | i == fst x && i == snd x = 2 + cantApariciones i xs
+    | i == fst x || i == snd x = 1 + cantApariciones i xs
+    | otherwise = cantApariciones i xs
+
+--EJERCICIO 3--
+
+porcentajeDeVotos :: String -> [(String,String)] -> [Integer] -> Float
+porcentajeDeVotos i (x:xs) votos = division (votosEspecificos i (x:xs) votos) (sumaTotal (votos))
+   
+votosEspecificos :: String -> [(String,String)] -> [Integer] -> Integer
+votosEspecificos i (x:[]) (v:[]) = v
+votosEspecificos i (x:xs) (v:vs) 
+    | i == snd x = v
+    | otherwise = votosEspecificos i xs vs
+
+--EJERCICIO 4--
+
+menosVotado :: [(String,String)] -> [Integer] -> String
+menosVotado [] [] = []
+menosVotado formulas votos = menosVotadoAux formulas votos (minimo votos)
+
+menosVotadoAux :: [(String,String)] -> [Integer] -> Integer -> String
+menosVotadoAux (x:[]) (v:[]) i = fst x
+menosVotadoAux (x:xs) (v:vs) i 
+    | i == v = fst x
+    | otherwise = menosVotadoAux xs vs i
+
+minimo :: [Integer] -> Integer
+minimo (v:[]) = v
+minimo (v:vs) 
+    | v > head vs = minimo (vs)
+    | otherwise = minimo (v:tail vs)
+
+--o directamente....................--
+menosVotado_bis :: [(String,String)] -> [Integer] -> String
+menosVotado_bis [] [] = []
+menosVotado_bis (x:[]) (v:[]) = fst x
+menosVotado_bis (x:xs) (v:vs)
+    | v > head vs = menosVotado_bis (xs) (vs)
+    | otherwise = menosVotado_bis (x:tail xs) (v:tail vs)

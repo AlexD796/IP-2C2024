@@ -131,7 +131,7 @@ esPar x
     | otherwise= False
 --}
 
-{--EJ 8--}
+{--EJ 8 esta mal !!! pide otra cosa eh--}
 
 esCaminoFibo :: [Int] -> Int -> Bool
 esCaminoFibo [] e = True
