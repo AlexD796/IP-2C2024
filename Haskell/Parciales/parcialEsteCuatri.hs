@@ -1,3 +1,5 @@
+{-PARIAL TEMA MAÑANA CUATRI 2C 2024-}
+
 {-EJ 1-}
 
 {-EJ 2-}
@@ -63,38 +65,78 @@ cantAp e (x:xs)
     | e == x = 1 + cantAp e (xs)
     | otherwise = cantAp e (xs)
 
-{-
-similAnagrama :: String -> String -> Bool
-similAnagrama l1 l2 = similAnagramaAux1 l1 l2
 
-similAnagramaAux1 :: String -> String -> String
-similAnagramaAux1 l1 l2 = similAnagramaAux ((sacarBlancos (l1)) (sacarBlancos (l2)))
+---------------------------------------------------------------------------------------------------------------------
+{-PARIAL TEMA TARDE CUATRI 2C 2024-}
 
-similAnagramaAux :: String -> String -> Bool
-similAnagramaAux [] [] = True
-similAnagramaAux _ [] = False
-similAnagramaAux [] _ = False
-similAnagramaAux (x:xs) (y:ys)
-    | cantApariciones x (x:xs) == cantApariciones x (y:ys) = similAnagramaAux (quitarTodos x (x:xs)) (quitarTodos x (y:ys)) 
-    | otherwise = False
+{-EJ 1, esto es re poco eficiente pero bueno funciona¿?-}
 
-sacarBlancos :: String -> String
-sacarBlancos (x:[])
-    | x == ' ' = []
-    | otherwise = [x]
-sacarBlancos (x:xs)
-    | x == ' ' = sacarBlancos xs
-    | otherwise = x : sacarBlancos xs
+maxMovilN :: [Integer] -> Integer -> Integer
+maxMovilN (x:xs) 1 = ultimo xs
+maxMovilN (x:xs) n 
+    | longitud (x:xs) == n = maximo (x:xs)
+    | otherwise = maximo (maxMovilAux (x:xs) n)
 
-cantApariciones :: Char -> String -> Int
-cantApariciones _ [] = 0
-cantApariciones e (x:xs)
-    | e == x = 1 + cantApariciones e (xs)
-    | otherwise = cantApariciones e (xs)
+maxMovilAux :: [Integer] -> Integer -> [Integer]
+maxMovilAux (x:xs) 1 = (x:xs)
+maxMovilAux (x:xs) n = maxMovilAux (xs) (n-1)
 
-quitarTodos :: Char -> String -> String
-quitarTodos e [] = []
-quitarTodos e (x:xs)
-    | e == x = quitarTodos e xs
-    | e /= x = x : quitarTodos e xs 
-    -}
+maximo :: [Integer] -> Integer
+maximo (x:[]) = x
+maximo (x:xs) 
+    | x < head xs = maximo (xs)
+    | otherwise = maximo (x:tail xs)
+
+ultimo :: [Integer] -> Integer
+ultimo (x:[]) = x
+ultimo (x:xs) = ultimo (xs)
+
+longitud :: [Integer] -> Integer
+longitud (x:[]) = 1
+longitud (x:xs) = 1 + longitud (xs)
+
+{-EJ 2-}
+
+promedioPrimo :: Integer -> Float
+promedioPrimo n = promedio (factorizacion 2 n)
+
+factorizacion :: Integer -> Integer -> [Integer]
+factorizacion i n
+    | n == 1 = []
+    | mod n i == 0 = i : factorizacion (i) (div n i)
+    | mod n i /= 0 = factorizacion (i + 1) (n)
+
+promedio :: [Integer] -> Float
+promedio n = fromIntegral (sumaFactores (n)) / fromIntegral (longitud n)
+
+sumaFactores :: [Integer] -> Integer
+sumaFactores (x:[]) = x
+sumaFactores (x:xs) = x + sumaFactores xs
+
+{-EJ 3-}
+
+letrasIguales :: String -> Integer
+letrasIguales (l:[]) = 0
+letrasIguales (l:ls) = letrasIgualesAux (l:ls) (l:ls)
+
+letrasIgualesAux :: String -> String -> Integer
+letrasIgualesAux _ [] = 0
+letrasIgualesAux [] _ = 0
+letrasIgualesAux (p:ps) l
+    | cantApa p l > 1 = 1 + letrasIgualesAux (ps) (sacarLetra p l)
+    | otherwise = letrasIgualesAux (ps) (sacarLetra p l)
+
+cantApa :: Char -> String -> Integer
+cantApa x [] = 0
+cantApa x (y:ys) 
+    | x == ' ' = 0
+    | x == y = 1 + cantApa x ys
+    | x /= y = cantApa x ys
+
+sacarLetra :: Char -> String -> String
+sacarLetra x [] = []
+sacarLetra x (y:ys)
+    | x == y = sacarLetra x ys
+    | x /= y = y : sacarLetra x ys
+
+{-EJ 3-}
