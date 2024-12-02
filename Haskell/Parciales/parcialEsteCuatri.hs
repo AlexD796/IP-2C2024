@@ -11,7 +11,7 @@ esAtractivo n = esPrimo (cantidadDivisoresPrimos n)
 
 cantidadDivisoresPrimos :: Integer -> Integer
 cantidadDivisoresPrimos n = contarDivisoresPrimosDesde 2 n 
-
+--hay una amnera mucho mas eficiente........
 contarDivisoresPrimosDesde :: Integer -> Integer -> Integer
 contarDivisoresPrimosDesde d n | d == n && esPrimo d = 1 -- CB : luego de dividir a el n por los factores primos que encontramos -> si factor == n entonces sumamos un ultimo divisor
                               -- | d == n && not (esPrimo d) = 0 --cuando llega hasta acá? CREO INNECESARIO xq nunca d va a ser compuesto y ser igual a n porque lo estamos dividiendo solamente pro sus factores primos a n
@@ -31,6 +31,17 @@ menorDivisorDesde desde n
     | mod n desde == 0 = desde
     | otherwise = menorDivisorDesde (desde+1) n
 
+
+---aca solo con esto ya cuenta la cant de divisores, faltaria fijarse que es primo
+cantFactores :: Integer -> Integer
+cantFactores 1 = 0
+cantFactores n = cantFactoresAux 2 n
+
+cantFactoresAux :: Integer -> Integer -> Integer
+cantFactoresAux d n 
+    | d == n = 1
+    | mod n d == 0 = 1 + cantFactoresAux d (div n d)
+    | mod n d /= 0 = cantFactoresAux (d+1) (n)
 
 {-EJ 3-}
 --"abc " yes --"gijj lopq" yes --"kaka" no --en haskell las palabras son list[char] por eso funcionan como listas
@@ -140,3 +151,4 @@ sacarLetra x (y:ys)
     | x /= y = y : sacarLetra x ys
 
 {-EJ 3-}
+

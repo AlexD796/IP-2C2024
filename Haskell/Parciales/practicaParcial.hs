@@ -33,7 +33,7 @@ pertenece productoEspecifico ((prod, cantidad): stocks) = productoEspecifico == 
 
 dineroEnStock :: [(String, Int)] -> [(String, Float)] -> Float
 dineroEnStock [(p1,c)] lp = fromIntegral c *  precioDelProducto lp p1
-dineroEnStock ((p1,c):sts) lp = fromIntegral(((stockDeProducto ((p1,c):sts) p1))) * (precioDelProducto lp p1) + dineroEnStock sts lp
+dineroEnStock ((p1,c):sts) lp = fromIntegral((stockDeProducto ((p1,c):sts) p1)) * (precioDelProducto lp p1) + dineroEnStock sts lp
 
 precioDelProducto :: [(String, Float)] -> String -> Float
 precioDelProducto ((p1,pr):prs) pEsp 
