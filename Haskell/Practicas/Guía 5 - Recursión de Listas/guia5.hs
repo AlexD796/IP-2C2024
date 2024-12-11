@@ -1,3 +1,4 @@
+-----------------EJ 1------------------------
 longitud :: [t] -> Integer
 longitud [] = 0
 longitud (x:xs) = 1 + longitud xs
@@ -17,6 +18,7 @@ reverso :: [t] -> [t]
 reverso [] = []
 reverso xs = ultimo xs : reverso (principio xs)
 
+-----------------EJ 2------------------------
 pertenece :: (Eq t) => t -> [t] -> Bool
 pertenece _ [] = False
 pertenece e (x:xs) = e == x || pertenece e (xs)
@@ -71,6 +73,7 @@ estaContenida (a:as) bs = pertenece a bs && estaContenida as bs
 capicua :: (Eq t) => [t] -> Bool
 capicua xs = xs == reverso xs
 
+-----------------EJ 3------------------------
 maximo :: [Integer] -> Integer
 maximo [x] = x
 maximo (x:y:xs) 
@@ -103,55 +106,68 @@ ordenar :: [Integer] -> [Integer]
 ordenar [] = []
 ordenar l = ordenar (quitar (maximo l) l) ++ [maximo l]
 
-sacarEspacios :: [Char] -> [Char]
-sacarEspacios [] = []
-sacarEspacios [x] = [x]
-sacarEspacios (x:y:xs) 
-    | x == y && x == ' ' = sacarEspacios (y:xs)
-    | otherwise = x : sacarEspacios (y:xs)
+-----------------EJ 4------------------------
+sacarBlancosRepetidos :: [Char] -> [Char]
+sacarBlancosRepetidos [] = []
+sacarBlancosRepetidos [x] = [x]
+sacarBlancosRepetidos (x:xs) 
+    | x == head xs && x == ' ' = sacarBlancosRepetidos (xs)
+    | otherwise = x : sacarBlancosRepetidos (xs)
 
 contarPalabras :: [Char] -> Integer
-contarPalabras [] = 0
-contarPalabras xs = contarEspacios (listaSinEspaciosReal xs) + 1 
+contarPalabras s = contarPalabrasAux (sacarBlancosRepetidos (s))
 
-listaSinEspaciosReal :: [Char] -> [Char]
-listaSinEspaciosReal xs = (sacarEspaciosAdelante (sacarEspaciosAtras (sacarEspacios xs)))
-
-sacarEspaciosAdelante :: [Char] -> [Char]
-sacarEspaciosAdelante [] = []
-sacarEspaciosAdelante [x] = [x]
-sacarEspaciosAdelante (x:xs) 
-    | x == ' ' = sacarEspaciosAdelante xs
-    | otherwise = (x: xs)
-
-sacarEspaciosAtras :: [Char] -> [Char]
-sacarEspaciosAtras [] = []
-sacarEspaciosAtras [x] = [x]
-sacarEspaciosAtras (x:xs) 
-    | ultimo (x:xs) == ' ' = sacarEspaciosAtras (principio (x:xs))
-    | otherwise = (x:xs)
-
-contarEspacios :: [Char] -> Integer
-contarEspacios [] = 0
-contarEspacios (x:xs) 
-    | x == ' ' = 1 + contarEspacios xs
-    | otherwise = contarEspacios xs
-
-primeraPalabra :: [Char] -> [Char]
-primeraPalabra [] = []
-primeraPalabra (x:xs) 
-    | x == ' ' = []
-    | otherwise = x : primeraPalabra xs
-
-sacarPrimeraPalabra :: [Char] -> [Char]
-sacarPrimeraPalabra [] = []
-sacarPrimeraPalabra (x:xs)
-    | x == ' ' = xs
-    | otherwise = sacarPrimeraPalabra xs
+contarPalabrasAux :: [Char] -> Integer
+contarPalabrasAux [] = 1
+contarPalabrasAux (x:xs)
+    | x == ' ' = 1 + contarPalabrasAux xs
+    | otherwise = contarPalabrasAux xs
 
 palabras :: [Char] -> [[Char]]
-palabras [] = []
-palabras ps = primeraPalabra ps : palabras (sacarPrimeraPalabra (listaSinEspaciosReal ps))
+palabras s = palabrasAux (listaSinEspacios (s)) -- si no hago esto la primera palabra si empiexa con "" lo toma como palabra
+
+palabrasAux :: [Char] -> [[Char]]
+palabrasAux [] = []
+palabrasAux s = [(primeraP s)] ++ palabras (sacarPrimeraP (s))
+
+listaSinEspacios :: [Char] -> [Char]
+listaSinEspacios s = quitarEspaciosAdelante (quitarEspaciosAtras (sacarBlancosRepetidos s))
+
+quitarEspaciosAdelante :: [Char] -> [Char]
+quitarEspaciosAdelante [] = []
+quitarEspaciosAdelante (x:xs)
+    | x == ' ' = quitarEspaciosAdelante xs
+    | otherwise = (x:xs)
+
+quitarEspaciosAtras :: [Char] -> [Char]
+quitarEspaciosAtras [] = []
+quitarEspaciosAtras (x:[]) -- necesario sino se rompe en " " etc
+    | x == ' '  = [] 
+    | otherwise = [x]
+quitarEspaciosAtras (x:xs)
+    | ultimo (x:xs) == ' ' = quitarEspaciosAtras (x:principio xs) --no se por qué si pones ultimo xs en vez de ultimo (x:xs) se indefine
+    | otherwise = (x:xs)
+
+primeraP :: [Char] -> [Char]
+primeraP [] = []
+primeraP (x:xs)
+    | x /= ' ' = x : primeraP xs
+    | otherwise = []
+
+sacarPrimeraP :: [Char] -> [Char]
+sacarPrimeraP [] = []
+sacarPrimeraP (x:xs) 
+    | x /= ' ' = sacarPrimeraP xs
+    | otherwise = xs
+
+palabraMasLarga :: [Char] -> [Char]
+palabraMasLarga s = palabraMasLargaAux (listaSinEspacios s)
+
+palabraMasLargaAux :: [Char] -> [Char]
+palabraMasLargaAux s 
+    | sacarPrimeraP s == [] = primeraP s --si hay una sola palabra es porque descarto todas las otras mas grandes y la primeraP es efectivamente la mas grande
+    | longitud (primeraP xs) > longitud (palabraMasLargaAuxiliar(sacarPrimeraP s)) = primeraP s --si esto se cumple la primera palabra era la mas grande
+    | otherwise = palabraMasLargaAuxiliar (sacarPrimeraP s) --sino saca la primera palabra y sigue recursionando
 
 palabraMasLargaAuxiliar :: [Char] -> [Char]
 palabraMasLargaAuxiliar xs 
@@ -162,6 +178,32 @@ palabraMasLargaAuxiliar xs
 palabraMasLarga :: [Char] -> [Char]
 palabraMasLarga xs = palabraMasLargaAuxiliar (listaSinEspaciosReal xs)
 
+-----------------EJ 5------------------------
+sumaAcumulada :: (Num t) => [t] -> [t]
+sumaAcumulada [] = []
+sumaAcumulada [s] = [s]
+sumaAcumulada (s) = sumaAcumulada (todoMenosUltimo (s)) ++ [sumaTotal (s)]
+
+sumaTotal :: (Num t) => [t] -> t
+sumaTotal (x:[]) = x
+sumaTotal (x:xs) = x + sumaTotal xs
+
+todoMenosUltimo :: (Num t) => [t] -> [t]
+todoMenosUltimo [] = []
+todoMenosUltimo (x:[]) = []
+todoMenosUltimo (x:xs) = x : todoMenosUltimo xs
+
+descomponerEnPrimos :: [Integer] -> [[Integer]]
+descomponerEnPrimos [] = []
+descomponerEnPrimos (x:xs) = [descomponerEnPrimosDesde 2 x] ++ descomponerEnPrimos xs
+
+descomponerEnPrimosDesde :: Integer -> Integer -> [Integer]
+descomponerEnPrimosDesde e 1 = []
+descomponerEnPrimosDesde e n 
+    | mod n e == 0 = e : descomponerEnPrimosDesde e (div n e)
+    | otherwise = descomponerEnPrimosDesde (e+1) n
+
+-----------------EJ 6------------------------
 type Texto = [Char]
 type Nombre = Texto
 type Telefono = Texto
@@ -193,6 +235,7 @@ eliminarContacto nombre ((otroNombre, otroTelefono): contactos)
     | nombre == otroNombre = contactos
     | otherwise = (otroNombre, otroTelefono) : eliminarContacto nombre contactos
 
+-----------------EJ 7------------------------
 type Identificacion = Integer
 type Ubicacion = Texto
 type Estado = (Disponibilidad, Ubicacion)

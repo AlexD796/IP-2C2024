@@ -167,7 +167,6 @@ siguientePrimo n | esPrimo (n+1) = n+1
 -- Ej: siguientePrimo 3 = 5, siguientePrimo 5=7, siguientePrimo 6=7
 
 -----------------EJ 17------------------------
-
 esFibonacci :: Integer -> Bool
 esFibonacci n = esFibonacciDesde 1 n
 
@@ -178,7 +177,13 @@ esFibonacciDesde desde n
     | otherwise = esFibonacciDesde (desde+1) n
 
 -----------------EJ 18------------------------
-
+mayorDigitoPar :: Integer -> Integer
+mayorDigitoPar n 
+    | (n < 10) && (mod n 2 == 0) = n
+    | (n < 10) && (mod n 2 /= 0) = -1
+    | even ultimoDigito = max ultimoDigito (mayorDigitoPar div n 10)
+    | otherwise = mayorDigitoPar nRecortado
+        where ultimoDigito = mod n 10
 
 -----------------EJ 19------------------------
 --10? -> True xq [2+3+5]
