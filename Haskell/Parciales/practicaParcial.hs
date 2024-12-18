@@ -1,5 +1,4 @@
 {-- GUIA REPASO PARCIAL PROBLEMA SISTEMA DE STOCK--}
-
 {--EJ 1--}
 
 generarStock :: [String] -> [(String, Int)]
