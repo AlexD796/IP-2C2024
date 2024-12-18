@@ -1,8 +1,3 @@
--- Nombre de Grupo: EMA
--- Integrante 1: Alex Ramirez 46015314 alexramirezzz2004@gmail.com
--- Integrante 2: Marilin Aylen Gomez 46289152 gomezmarilin614@gmail.com
--- Integrante 3: Ezequiel Matias Schejtman 46365611 e27eschejtman@gmail.com
-
 module Solucion where
 
 type Ciudad = String
